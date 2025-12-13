@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Luxe Digital Landing Page
 
-## Getting Started
+A world-class premium landing page for web development agencies. Built with cutting-edge technologies and featuring smooth, cinematic animations.
 
-First, run the development server:
+## ✨ Features
+
+### Premium Effects
+- **Cinematic Preloader** — Animated logo with loading bar for first impression
+- **Per-Character Text Animation** — Staggered letter-by-letter reveal effect
+- **Morphing Background Shapes** — Animated blob shapes that follow mouse movement
+- **Horizontal Scroll Gallery** — Immersive portfolio showcase with CSS scroll-snap
+- **Infinite Tech Marquee** — Auto-scrolling technology logos
+- **Magnetic Buttons** — Interactive buttons that follow cursor on hover
+- **Image Distortion** — CSS-based skew and scale effects on hover
+- **Glassmorphism** — Frosted glass effect on navbar and cards
+- **Spotlight Hover** — Gradient that follows cursor on service cards
+
+### Sections
+- Navbar with glassmorphism and scroll detection
+- Hero with animated text and morphing background
+- Tech Stack infinite marquee
+- Services bento grid layout
+- Portfolio horizontal scroll gallery
+- Testimonials carousel with auto-play
+- Call-to-action with shimmer effect
+- Footer with multi-column layout
+
+## 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 16 | React framework with App Router |
+| TypeScript | Type safety |
+| Tailwind CSS | Utility-first styling |
+| Framer Motion | Declarative animations |
+| Lenis | Smooth scroll |
+| Lucide React | Icon library |
+
+## 📦 Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/Pusri27/luxe-digital-landing.git
+
+# Navigate to project directory
+cd luxe-digital-landing
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/
+│   ├── globals.css      # Design system & animations
+│   ├── layout.tsx       # Root layout with providers
+│   └── page.tsx         # Main landing page
+├── components/
+│   ├── effects/         # Animation components
+│   │   ├── MorphingBlob.tsx
+│   │   ├── Preloader.tsx
+│   │   ├── SmoothScroll.tsx
+│   │   ├── SplitText.tsx
+│   │   └── Marquee.tsx
+│   ├── sections/        # Page sections
+│   │   ├── Navbar.tsx
+│   │   ├── Hero.tsx
+│   │   ├── Services.tsx
+│   │   ├── Portfolio.tsx
+│   │   ├── Testimonials.tsx
+│   │   ├── CTA.tsx
+│   │   └── Footer.tsx
+│   └── ui/              # Reusable UI components
+│       └── MagneticButton.tsx
+```
 
-## Learn More
+## ⚡ Performance
 
-To learn more about Next.js, take a look at the following resources:
+- All animations use CSS transforms (GPU accelerated)
+- Lightweight bundle with minimal dependencies
+- Static page generation for fast initial load
+- Smooth 60fps animations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Design Highlights
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Color Palette**: Dark luxury theme with gold (#d4af37) and copper (#b87333) accents
+- **Typography**: Inter for body, Playfair Display for quotes
+- **Aesthetic**: Premium, elegant, modern, clean
 
-## Deploy on Vercel
+## 📄 License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is open source and available under the [MIT License](LICENSE).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👤 Author
+
+**Pusri**
+
+- GitHub: [@Pusri27](https://github.com/Pusri27)
+
+---
+
+Built with ❤️ using Next.js and Framer Motion
