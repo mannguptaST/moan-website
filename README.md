@@ -103,7 +103,3 @@ This project is open source and available under the [MIT License](LICENSE).
 **Pusri**
 
 - GitHub: [@Pusri27](https://github.com/Pusri27)
-
----
-
-Built with ❤️ using Next.js and Framer Motion
