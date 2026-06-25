@@ -1,8 +1,6 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { createClient } from "@/lib/supabase";
-import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -29,32 +27,9 @@ interface AuthContextType {
     joinWaitlist: (email: string, phone?: string, gender?: string) => Promise<void>;
 }
 
-// ─── Context ─────────────────────────────────────────────────────────────────
-
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// ─── Helper ──────────────────────────────────────────────────────────────────
-
-function supabaseUserToProfile(
-    supabaseUser: SupabaseUser,
-    profileData?: {
-        name?: string;
-        phone?: string;
-        gender?: string;
-        joined_waitlist?: boolean;
-        discount_code?: string;
-    } | null
-): UserProfile {
-    return {
-        id: supabaseUser.id,
-        name: profileData?.name ?? supabaseUser.user_metadata?.name ?? supabaseUser.email?.split("@")[0] ?? "User",
-        email: supabaseUser.email ?? "",
-        phone: profileData?.phone ?? undefined,
-        gender: (profileData?.gender as UserProfile["gender"]) ?? undefined,
-        joinedWaitlist: profileData?.joined_waitlist ?? false,
-        discountCode: profileData?.discount_code ?? "",
-    };
-}
+const STORAGE_KEY = "moan_user";
 
 // ─── Provider ────────────────────────────────────────────────────────────────
 
@@ -63,112 +38,78 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const [authModalTab, setAuthModalTab] = useState<"signup" | "login">("signup");
 
-    const supabase = createClient();
-
-    // Fetch the user's profile row from public.profiles
-    const fetchProfile = async (supabaseUser: SupabaseUser): Promise<UserProfile> => {
-        const { data } = await supabase
-            .from("profiles")
-            .select("name, phone, gender, joined_waitlist, discount_code")
-            .eq("id", supabaseUser.id)
-            .single();
-        return supabaseUserToProfile(supabaseUser, data);
-    };
-
-    // Listen for auth state changes (login, logout, token refresh)
+    // Load persisted user on mount
     useEffect(() => {
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event, session) => {
-                if (session?.user) {
-                    const profile = await fetchProfile(session.user);
-                    setUser(profile);
-                } else {
-                    setUser(null);
-                }
-            }
-        );
-
-        // Check for an existing session on mount
-        supabase.auth.getUser().then(async ({ data: { user: supabaseUser } }) => {
-            if (supabaseUser) {
-                const profile = await fetchProfile(supabaseUser);
-                setUser(profile);
-            }
-        });
-
-        return () => subscription.unsubscribe();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) setUser(JSON.parse(stored));
+        } catch {
+            // ignore
+        }
     }, []);
+
+    const persist = (u: UserProfile | null) => {
+        setUser(u);
+        if (u) localStorage.setItem(STORAGE_KEY, JSON.stringify(u));
+        else localStorage.removeItem(STORAGE_KEY);
+    };
 
     // ── Modal helpers ───────────────────────────────────────────────────────
 
     const openSignUp = () => { setAuthModalTab("signup"); setIsAuthModalOpen(true); };
-    const openLogin = () => { setAuthModalTab("login"); setIsAuthModalOpen(true); };
+    const openLogin  = () => { setAuthModalTab("login");  setIsAuthModalOpen(true); };
     const closeAuthModal = () => setIsAuthModalOpen(false);
 
     // ── Auth actions ────────────────────────────────────────────────────────
 
-    const signUp = async (name: string, email: string, password: string) => {
-        const { data, error } = await supabase.auth.signUp({
+    const signUp = async (name: string, email: string, _password: string) => {
+        // TODO: replace with real API / Supabase when ready
+        const newUser: UserProfile = {
+            id: `local_${Date.now()}`,
+            name,
             email,
-            password,
-            options: { data: { name } },
-        });
+            joinedWaitlist: false,
+            discountCode: "",
+        };
+        persist(newUser);
+        setIsAuthModalOpen(false);
+    };
 
-        if (error) throw error;
-
-        // Create the profile row immediately after sign-up
-        if (data.user) {
-            await supabase.from("profiles").upsert({
-                id: data.user.id,
-                name,
-            });
+    const login = async (email: string, _password: string) => {
+        // TODO: replace with real API / Supabase when ready
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            const u: UserProfile = JSON.parse(stored);
+            if (u.email === email) {
+                persist(u);
+                setIsAuthModalOpen(false);
+                return;
+            }
         }
-
-        setIsAuthModalOpen(false);
+        throw new Error("No account found. Please sign up first.");
     };
 
-    const login = async (email: string, password: string) => {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        setIsAuthModalOpen(false);
-    };
-
-    const logout = async () => {
-        await supabase.auth.signOut();
-        setUser(null);
-    };
+    const logout = () => persist(null);
 
     const joinWaitlist = async (email: string, phone?: string, gender?: string) => {
         const discountCode = "MOAN50";
-
-        // Insert into the waitlist table
-        const { error: wlError } = await supabase.from("waitlist").insert({
-            email,
-            phone: phone ?? null,
-            gender: gender ?? null,
-            discount_code: discountCode,
-        });
-
-        if (wlError && wlError.code !== "23505") {
-            // 23505 = unique violation (already on waitlist) — safe to ignore
-            throw wlError;
+        // TODO: replace with real API / Supabase when ready
+        if (user) {
+            const updated: UserProfile = {
+                ...user,
+                phone,
+                gender: gender as UserProfile["gender"],
+                joinedWaitlist: true,
+                discountCode,
+            };
+            persist(updated);
         }
-
-        // If the user is logged in, update their profile too
-        if (user?.id) {
-            await supabase.from("profiles").update({
-                phone: phone ?? null,
-                gender: gender ?? null,
-                joined_waitlist: true,
-                discount_code: discountCode,
-            }).eq("id", user.id);
-
-            setUser((prev) =>
-                prev
-                    ? { ...prev, phone, gender: gender as UserProfile["gender"], joinedWaitlist: true, discountCode }
-                    : prev
-            );
+        // Store waitlist entry even for guests
+        const waitlist = JSON.parse(localStorage.getItem("moan_waitlist") ?? "[]");
+        const alreadyIn = waitlist.some((e: { email: string }) => e.email === email);
+        if (!alreadyIn) {
+            waitlist.push({ email, phone: phone ?? null, gender: gender ?? null, discountCode });
+            localStorage.setItem("moan_waitlist", JSON.stringify(waitlist));
         }
     };
 
