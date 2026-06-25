@@ -15,17 +15,22 @@ export default function ComingSoon() {
     const [gender, setGender] = useState<"male" | "female" | "other" | "">("");
     const [isLoading, setIsLoading] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [guestSubmitted, setGuestSubmitted] = useState(false);
 
-    const submitted = !!user?.joinedWaitlist;
-    const discountCode = user?.discountCode || "";
+    const submitted = !!user?.joinedWaitlist || guestSubmitted;
+    const discountCode = user?.discountCode || "MOAN50";
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const targetEmail = user?.email || email;
         if (!targetEmail || !gender) return;
         setIsLoading(true);
-        await joinWaitlist(targetEmail, phone, gender);
-        setIsLoading(false);
+        try {
+            await joinWaitlist(targetEmail, phone, gender);
+        } finally {
+            setIsLoading(false);
+            if (!user) setGuestSubmitted(true);
+        }
     };
 
     const copyCode = () => {
