@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { submitToGoogleSheet } from "@/lib/googleSheets";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -93,7 +94,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const joinWaitlist = async (email: string, phone?: string, gender?: string) => {
         const discountCode = "MOAN50";
-        // TODO: replace with real API / Supabase when ready
+
+        // Save to Google Sheet
+        await submitToGoogleSheet({ email, phone, gender, source: "waitlist" });
+
         if (user) {
             const updated: UserProfile = {
                 ...user,
