@@ -14,9 +14,10 @@ interface WaitlistEntry {
 export async function submitToGoogleSheet(entry: WaitlistEntry): Promise<void> {
     if (!SHEET_URL) return;
     try {
+        // no-cors mode blocks application/json — send as text/plain so the body still reaches Apps Script
         await fetch(SHEET_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "text/plain" },
             body: JSON.stringify({
                 email: entry.email,
                 phone: entry.phone ?? "",
