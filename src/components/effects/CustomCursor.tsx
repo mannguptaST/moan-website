@@ -92,10 +92,6 @@ export default function CustomCursor() {
                     filter: "blur(4px)",
                 }}
             />
-
-            <style jsx global>{`
-                * { cursor: none !important; }
-            `}</style>
         </>
     );
 }
