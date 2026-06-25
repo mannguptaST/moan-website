@@ -2,9 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Sparkles } from "lucide-react";
-import SplitText from "@/components/effects/SplitText";
-import MorphingBlob from "@/components/effects/MorphingBlob";
+import { ArrowRight, Flame } from "lucide-react";
+import { SplitWords } from "@/components/effects/SplitText";
+import Image from "next/image";
+import EmberParticles from "@/components/effects/EmberParticles";
+import CandleFlame from "@/components/effects/CandleFlame";
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -13,9 +15,10 @@ export default function Hero() {
         offset: ["start start", "end start"],
     });
 
-    const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-    const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+    const y = useTransform(scrollYProgress, [0, 1], [0, 180]);
+    const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
+    const scale = useTransform(scrollYProgress, [0, 0.55], [1, 0.96]);
+    const imgY = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
     return (
         <section
@@ -23,116 +26,207 @@ export default function Hero() {
             id="home"
             className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-            {/* Morphing Background */}
-            <MorphingBlob />
+            {/* Full-bleed hero image — parallax */}
+            <motion.div style={{ y: imgY }} className="absolute inset-0 z-0">
+                <Image
+                    src="/images/hero-candles.jpg"
+                    alt="Moan premium mood — three burgundy jars on silk with lit flame"
+                    fill
+                    priority
+                    className="object-cover object-center"
+                    quality={90}
+                    style={{ filter: "blur(3px)", transform: "scale(1.06)" }}
+                />
+                {/* Cinematic dark overlay */}
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        background:
+                            "linear-gradient(180deg, rgba(8,8,10,0.70) 0%, rgba(8,8,10,0.38) 45%, rgba(8,8,10,0.80) 100%)",
+                    }}
+                />
+                {/* Bottom fade to site bg */}
+                <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#08080a] to-transparent" />
+            </motion.div>
 
-            {/* Grid Pattern */}
+            {/* Floating ember particles */}
+            <EmberParticles count={20} />
+
+            {/* Subtle grain overlay */}
             <div
-                className="absolute inset-0 opacity-[0.015] pointer-events-none"
+                className="absolute inset-0 pointer-events-none opacity-[0.03] z-[1]"
                 style={{
-                    backgroundImage: `
-            linear-gradient(rgba(212, 175, 55, 0.5) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(212, 175, 55, 0.5) 1px, transparent 1px)
-          `,
-                    backgroundSize: "80px 80px",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    backgroundSize: "200px 200px",
                 }}
             />
-
-            {/* Vignette */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#0a0a0a_70%)] pointer-events-none" />
 
             {/* Content */}
             <motion.div
                 style={{ y, opacity, scale }}
-                className="relative z-10 max-w-6xl mx-auto px-6 text-center"
+                className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 md:pt-28"
             >
-                {/* Badge */}
+                {/* Premium badge */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                    initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass mb-10"
+                    transition={{ duration: 0.9, delay: 0.2 }}
+                    className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-10 md:mb-12"
+                    style={{
+                        background: "rgba(122,28,46,0.18)",
+                        border: "1px solid rgba(201,169,110,0.25)",
+                        backdropFilter: "blur(12px)",
+                    }}
                 >
-                    <Sparkles className="w-4 h-4 text-[#d4af37]" />
-                    <span className="text-sm text-[#a0a0a0] tracking-wide">
-                        Premium Web Development Agency
+                    <Flame className="w-3.5 h-3.5" style={{ color: "#c9a96e" }} />
+                    <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "#c9a96e" }}>
+                        Premium Mood · Limited Edition
                     </span>
                 </motion.div>
 
-                {/* Headline with Per-Character Animation */}
-                <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold mb-8 tracking-tight leading-[1.1]">
-                    <span className="block text-white mb-2">
-                        <SplitText delay={0.4} staggerDelay={0.04}>
-                            Crafting Digital
-                        </SplitText>
+                {/* Main headline */}
+                <h1 className="mb-6 md:mb-8">
+                    {/* Line 1: "Light the" */}
+                    <span
+                        className="block"
+                        style={{
+                            fontFamily: "'Bodoni Moda', 'Cormorant', 'Cormorant Garamond', serif",
+                            fontSize: "clamp(2.8rem, 7vw, 7rem)",
+                            fontWeight: 300,
+                            fontStyle: "italic",
+                            lineHeight: 1.05,
+                            color: "#e0c48a",
+                            WebkitTextFillColor: "#e0c48a",
+                            textShadow: "0 0 20px rgba(240,210,140,0.35), 0 4px 40px rgba(0,0,0,0.55)",
+                        }}
+                    >
+                        <SplitWords delay={0.4} staggerDelay={0.12}>
+                            Light the
+                        </SplitWords>
                     </span>
-                    <span className="block gradient-text">
-                        <SplitText delay={0.8} staggerDelay={0.04}>
-                            Excellence
-                        </SplitText>
+                    {/* Line 2: "Mood." — slightly larger for emphasis */}
+                    <span
+                        className="block"
+                        style={{
+                            fontFamily: "'Bodoni Moda', 'Cormorant', 'Cormorant Garamond', serif",
+                            fontSize: "clamp(3.5rem, 9vw, 9rem)",
+                            fontWeight: 300,
+                            fontStyle: "italic",
+                            lineHeight: 1,
+                            color: "#c9a96e",
+                            WebkitTextFillColor: "#c9a96e",
+                            textShadow: "0 0 30px rgba(240,210,140,0.40), 0 4px 50px rgba(0,0,0,0.5)",
+                        }}
+                    >
+                        <SplitWords delay={0.65} staggerDelay={0.15}>
+                            Mood.
+                        </SplitWords>
                     </span>
                 </h1>
 
-                {/* Subheadline */}
+                {/* Subtext */}
                 <motion.p
-                    initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+                    initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    transition={{ duration: 0.8, delay: 1.2 }}
-                    className="text-lg md:text-xl text-[#808080] max-w-2xl mx-auto mb-14 leading-relaxed font-light"
+                    transition={{ duration: 0.9, delay: 1.4 }}
+                    className="max-w-md mx-auto mb-10 md:mb-14 leading-relaxed font-light text-sm md:text-base"
+                    style={{
+                        color: "#d4c8be",
+                        fontFamily: "'Inter', sans-serif",
+                        textShadow: "0 2px 20px rgba(0,0,0,0.7)",
+                    }}
                 >
-                    We transform visionary ideas into stunning digital experiences.
-                    <br className="hidden md:block" />
-                    Precision engineering meets elegant design.
+                    A premium mood brand crafted to turn ordinary evenings into
+                    intimate, unforgettable moments.
                 </motion.p>
 
                 {/* CTA Buttons */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.4 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-5"
+                    transition={{ duration: 0.7, delay: 1.7 }}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5"
                 >
                     <a
-                        href="#contact"
-                        className="group relative px-10 py-4 rounded-full overflow-hidden"
+                        href="#coming-soon"
+                        id="hero-join-waitlist"
+                        className="group relative w-full sm:w-auto px-10 py-4 rounded-full overflow-hidden inline-flex items-center justify-center gap-3 transition-all duration-500"
+                        style={{ border: "1px solid rgba(201,169,110,0.35)" }}
                     >
-                        <span className="absolute inset-0 bg-gradient-to-r from-[#d4af37] to-[#b87333]" />
-                        <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-[#e6c65c] to-[#d4af37]" />
-                        <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl bg-gradient-to-r from-[#d4af37] to-[#b87333]" />
-                        <span className="relative flex items-center gap-2 text-black font-semibold tracking-wide">
-                            Start Your Project
-                            <ArrowDown className="w-4 h-4 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
+                        <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
+                        <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "linear-gradient(135deg, #9a2540, #570f1e)" }} />
+                        <span className="relative text-sm font-medium tracking-[0.12em] uppercase" style={{ color: "#e0c48a" }}>
+                            Join the Waitlist
                         </span>
+                        <ArrowRight className="relative w-4 h-4 transition-transform group-hover:translate-x-1" style={{ color: "#c9a96e" }} />
                     </a>
 
                     <a
-                        href="#portfolio"
-                        className="group px-10 py-4 rounded-full border border-[#2a2a2a] hover:border-[#d4af37]/50 transition-all duration-500 hover:bg-[#d4af37]/5"
+                        href="#product"
+                        id="hero-discover-candle"
+                        className="group w-full sm:w-auto px-10 py-4 rounded-full inline-flex items-center justify-center gap-3 transition-all duration-500"
+                        style={{ border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}
                     >
-                        <span className="text-[#a0a0a0] group-hover:text-white transition-colors font-medium tracking-wide">
-                            View Our Work
+                        <span
+                            className="text-sm font-light tracking-[0.12em] uppercase transition-colors group-hover:text-[#f0ece8]"
+                            style={{ color: "#c8b9a8" }}
+                        >
+                            Discover More
                         </span>
                     </a>
                 </motion.div>
+
+                {/* Stats — mobile-safe with flex-wrap */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.1, duration: 1 }}
+                    className="mt-16 md:mt-20 flex flex-wrap items-center justify-center gap-x-8 gap-y-5 sm:gap-x-12"
+                >
+                    {[
+                        { value: "100%", label: "Natural Wax" },
+                        { value: "60+", label: "Hour Burn" },
+                        { value: "Premium", label: "Pour Quality" },
+                    ].map((stat) => (
+                        <div key={stat.label} className="text-center">
+                            <p
+                                className="text-xl md:text-2xl font-light mb-1"
+                                style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}
+                            >
+                                {stat.value}
+                            </p>
+                            <p className="text-[10px] tracking-[0.2em] uppercase" style={{ color: "#888" }}>
+                                {stat.label}
+                            </p>
+                        </div>
+                    ))}
+                </motion.div>
             </motion.div>
 
-            {/* Scroll Indicator */}
+            {/* Interactive candle — ambient focal point */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 2, duration: 1 }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
+                transition={{ delay: 2.6, duration: 1.2 }}
+                className="absolute bottom-20 md:bottom-24 left-1/2 -translate-x-1/2 z-20"
+            >
+                <CandleFlame />
+            </motion.div>
+
+            {/* Scroll indicator */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2.4, duration: 1 }}
+                className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 z-20"
             >
                 <motion.div
                     animate={{ y: [0, 8, 0] }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
                     className="flex flex-col items-center gap-3"
                 >
-                    <span className="text-[10px] text-[#666] uppercase tracking-[0.3em]">
-                        Scroll
-                    </span>
-                    <div className="w-[1px] h-8 bg-gradient-to-b from-[#d4af37] to-transparent" />
+                    <span className="text-[9px] tracking-[0.35em] uppercase" style={{ color: "#888" }}>Scroll</span>
+                    <div className="w-[1px] h-8" style={{ background: "linear-gradient(to bottom, #c9a96e, transparent)" }} />
                 </motion.div>
             </motion.div>
         </section>

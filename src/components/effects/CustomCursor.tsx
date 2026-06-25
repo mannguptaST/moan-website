@@ -4,102 +4,98 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function CustomCursor() {
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [pos, setPos] = useState({ x: 0, y: 0 });
     const [isPointer, setIsPointer] = useState(false);
     const [isHidden, setIsHidden] = useState(true);
+    const [isTouch, setIsTouch] = useState(false);
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            setPosition({ x: e.clientX, y: e.clientY });
+        if ("ontouchstart" in window) {
+            setIsTouch(true);
+            return;
+        }
+
+        const onMove = (e: MouseEvent) => {
+            setPos({ x: e.clientX, y: e.clientY });
             setIsHidden(false);
+            const el = e.target as HTMLElement;
+            setIsPointer(
+                window.getComputedStyle(el).cursor === "pointer" ||
+                    el.tagName === "A" ||
+                    el.tagName === "BUTTON" ||
+                    !!el.closest("a") ||
+                    !!el.closest("button")
+            );
         };
 
-        const handleMouseEnter = () => setIsHidden(false);
-        const handleMouseLeave = () => setIsHidden(true);
+        document.addEventListener("mousemove", onMove);
+        document.addEventListener("mouseleave", () => setIsHidden(true));
+        document.addEventListener("mouseenter", () => setIsHidden(false));
+        return () => document.removeEventListener("mousemove", onMove);
+    }, []);
 
-        const handlePointerCheck = () => {
-            const target = document.elementFromPoint(position.x, position.y);
-            if (target) {
-                const computedStyle = window.getComputedStyle(target);
-                setIsPointer(
-                    computedStyle.cursor === "pointer" ||
-                    target.tagName === "A" ||
-                    target.tagName === "BUTTON" ||
-                    target.closest("a") !== null ||
-                    target.closest("button") !== null
-                );
-            }
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mousemove", handlePointerCheck);
-        document.addEventListener("mouseenter", handleMouseEnter);
-        document.addEventListener("mouseleave", handleMouseLeave);
-
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mousemove", handlePointerCheck);
-            document.removeEventListener("mouseenter", handleMouseEnter);
-            document.removeEventListener("mouseleave", handleMouseLeave);
-        };
-    }, [position.x, position.y]);
-
-    // Hide on mobile/touch devices
-    if (typeof window !== "undefined" && "ontouchstart" in window) {
-        return null;
-    }
+    if (isTouch) return null;
 
     return (
         <>
-            {/* Main Cursor */}
+            {/* Precise golden core dot */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+                className="fixed top-0 left-0 pointer-events-none z-[9999] rounded-full"
                 animate={{
-                    x: position.x - (isPointer ? 24 : 8),
-                    y: position.y - (isPointer ? 24 : 8),
-                    scale: isHidden ? 0 : 1,
-                    width: isPointer ? 48 : 16,
-                    height: isPointer ? 48 : 16,
+                    x: pos.x - (isPointer ? 0 : 5),
+                    y: pos.y - (isPointer ? 0 : 5),
+                    width: isPointer ? 0 : 10,
+                    height: isPointer ? 0 : 10,
+                    opacity: isHidden ? 0 : 1,
                 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 28,
-                    mass: 0.5,
-                }}
+                transition={{ type: "spring", stiffness: 700, damping: 30, mass: 0.3 }}
                 style={{
-                    backgroundColor: "white",
-                    borderRadius: "50%",
+                    background: "radial-gradient(circle, #f5d56e 0%, #c9a96e 60%, transparent 100%)",
+                    boxShadow: "0 0 6px rgba(245,213,110,0.8), 0 0 14px rgba(201,169,110,0.4)",
                 }}
             />
 
-            {/* Trailing Cursor */}
+            {/* Outer ring — springs behind */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9998] border border-[#d4af37]/50 rounded-full"
+                className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full"
                 animate={{
-                    x: position.x - 20,
-                    y: position.y - 20,
-                    scale: isHidden ? 0 : isPointer ? 1.5 : 1,
-                    opacity: isHidden ? 0 : 0.5,
+                    x: pos.x - (isPointer ? 22 : 18),
+                    y: pos.y - (isPointer ? 22 : 18),
+                    width: isPointer ? 44 : 36,
+                    height: isPointer ? 44 : 36,
+                    opacity: isHidden ? 0 : isPointer ? 0.75 : 0.45,
                 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 150,
-                    damping: 20,
-                    mass: 0.8,
-                }}
+                transition={{ type: "spring", stiffness: 180, damping: 22, mass: 0.6 }}
                 style={{
-                    width: 40,
-                    height: 40,
+                    border: isPointer
+                        ? "1px solid rgba(245,213,110,0.65)"
+                        : "1px solid rgba(201,169,110,0.38)",
+                    background: isPointer
+                        ? "radial-gradient(circle, rgba(201,169,110,0.12), transparent 70%)"
+                        : "transparent",
+                    boxShadow: isPointer
+                        ? "0 0 12px rgba(201,169,110,0.2), inset 0 0 8px rgba(201,169,110,0.06)"
+                        : "none",
+                    transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",
                 }}
             />
 
-            {/* Hide default cursor */}
+            {/* Slow trailing glow */}
+            <motion.div
+                className="fixed top-0 left-0 pointer-events-none z-[9997] rounded-full"
+                animate={{ x: pos.x - 30, y: pos.y - 30, opacity: isHidden ? 0 : 0.18 }}
+                transition={{ type: "spring", stiffness: 80, damping: 18, mass: 1 }}
+                style={{
+                    width: 60,
+                    height: 60,
+                    background: "radial-gradient(circle, rgba(201,169,110,0.25), transparent 70%)",
+                    filter: "blur(4px)",
+                }}
+            />
+
             <style jsx global>{`
-        * {
-          cursor: none !important;
-        }
-      `}</style>
+                * { cursor: none !important; }
+            `}</style>
         </>
     );
 }

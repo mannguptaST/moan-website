@@ -2,54 +2,54 @@
 
 import { motion } from "framer-motion";
 
-const techStack = [
-    { name: "Next.js", icon: "▲" },
-    { name: "React", icon: "⚛" },
-    { name: "TypeScript", icon: "TS" },
-    { name: "Tailwind CSS", icon: "🎨" },
-    { name: "Node.js", icon: "⬢" },
-    { name: "Framer Motion", icon: "◈" },
-    { name: "PostgreSQL", icon: "🐘" },
-    { name: "MongoDB", icon: "🍃" },
-    { name: "GraphQL", icon: "◆" },
-    { name: "AWS", icon: "☁" },
-    { name: "Vercel", icon: "▲" },
-    { name: "Figma", icon: "◐" },
+const moodWords = [
+    { name: "Desire", symbol: "✦" },
+    { name: "Warmth", symbol: "✦" },
+    { name: "Intimacy", symbol: "✦" },
+    { name: "Mystery", symbol: "✦" },
+    { name: "Romance", symbol: "✦" },
+    { name: "Ambience", symbol: "✦" },
+    { name: "After Dark", symbol: "✦" },
+    { name: "Flame", symbol: "✦" },
+    { name: "Luxury", symbol: "✦" },
+    { name: "Serenity", symbol: "✦" },
 ];
 
-export default function Marquee() {
-    // Duplicate for seamless loop
-    const items = [...techStack, ...techStack];
+export default function MoodMarquee() {
+    const items = [...moodWords, ...moodWords];
 
     return (
-        <div className="relative py-16 overflow-hidden bg-[#0a0a0a]">
-            {/* Gradient Overlays */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+        <div className="relative py-10 overflow-hidden border-y border-[#1a1215]">
+            {/* Gradient fade edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#08080a] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#08080a] to-transparent z-10 pointer-events-none" />
 
-            {/* Marquee Track */}
+            {/* Marquee track */}
             <motion.div
-                animate={{ x: [0, -50 * techStack.length] }}
+                animate={{ x: [0, -160 * moodWords.length] }}
                 transition={{
                     x: {
                         repeat: Infinity,
                         repeatType: "loop",
-                        duration: 20,
+                        duration: 30,
                         ease: "linear",
                     },
                 }}
-                className="flex gap-12 w-max"
+                className="flex gap-10 w-max"
             >
-                {items.map((tech, index) => (
+                {items.map((item, index) => (
                     <div
                         key={index}
-                        className="flex items-center gap-3 px-6 py-3 rounded-full glass border border-[#222] hover:border-[#d4af37]/30 transition-colors group"
+                        className="flex items-center gap-4"
                     >
-                        <span className="text-xl opacity-60 group-hover:opacity-100 transition-opacity">
-                            {tech.icon}
+                        <span
+                            className="text-xs tracking-[0.3em] uppercase whitespace-nowrap"
+                            style={{ color: "#9a8e8a", fontFamily: "'Inter', sans-serif" }}
+                        >
+                            {item.name}
                         </span>
-                        <span className="text-[#a0a0a0] group-hover:text-white font-medium whitespace-nowrap transition-colors">
-                            {tech.name}
+                        <span className="text-[#7a1c2e] text-xs">
+                            {item.symbol}
                         </span>
                     </div>
                 ))}

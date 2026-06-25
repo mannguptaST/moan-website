@@ -1,22 +1,26 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
-import Marquee from "@/components/effects/Marquee";
-import Services from "@/components/sections/Services";
-import Portfolio from "@/components/sections/Portfolio";
-import Testimonials from "@/components/sections/Testimonials";
-import CTA from "@/components/sections/CTA";
+import MoodMarquee from "@/components/effects/Marquee";
+import ProductReveal from "@/components/sections/ProductReveal";
+import BrandStory from "@/components/sections/BrandStory";
+import MoodNotes from "@/components/sections/MoodNotes";
+import UseCases from "@/components/sections/UseCases";
+import ProductSizes from "@/components/sections/ProductSizes";
+import ComingSoon from "@/components/sections/ComingSoon";
 import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a]">
+    <main id="home" className="min-h-screen bg-[#08080a]">
       <Navbar />
       <Hero />
-      <Marquee />
-      <Services />
-      <Portfolio />
-      <Testimonials />
-      <CTA />
+      <MoodMarquee />
+      <ProductReveal />
+      <BrandStory />
+      <MoodNotes />
+      <UseCases />
+      <ProductSizes />
+      <ComingSoon />
       <Footer />
     </main>
   );

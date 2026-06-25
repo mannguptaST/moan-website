@@ -79,19 +79,18 @@ export function SplitWords({
     const words = children.split(" ");
 
     return (
-        <span className={className} aria-label={children}>
+        <span className={className} style={{ display: "inline" }} aria-label={children}>
             {words.map((word, index) => (
                 <motion.span
                     key={index}
-                    initial={{ opacity: 0, y: 30, rotateX: -20 }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{
-                        duration: 0.6,
+                        duration: 0.65,
                         delay: delay + index * staggerDelay,
                         ease: [0.22, 1, 0.36, 1],
                     }}
                     className="inline-block mr-[0.25em]"
-                    style={{ transformOrigin: "bottom" }}
                     aria-hidden="true"
                 >
                     {word}

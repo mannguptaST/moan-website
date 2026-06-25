@@ -2,16 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function Preloader() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Simulate loading time
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 2000);
-
+        }, 2400);
         return () => clearTimeout(timer);
     }, []);
 
@@ -22,59 +21,76 @@ export default function Preloader() {
                     initial={{ opacity: 1 }}
                     exit={{
                         opacity: 0,
-                        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
                     }}
-                    className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0a]"
+                    className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#08080a]"
                 >
-                    {/* Logo Animation */}
-                    <div className="relative">
-                        {/* Glow Effect */}
-                        <motion.div
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 0.5 }}
-                            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                            className="absolute inset-0 w-24 h-24 bg-[#d4af37] rounded-2xl blur-[60px]"
+                    <div className="relative flex flex-col items-center">
+
+                        {/* Wide ambient glow behind the logo */}
+                        <div
+                            aria-hidden
+                            className="absolute pointer-events-none"
+                            style={{
+                                width: "520px",
+                                height: "200px",
+                                borderRadius: "50%",
+                                background:
+                                    "radial-gradient(ellipse at 42% 50%, rgba(201,169,110,0.35) 0%, rgba(122,28,46,0.18) 50%, transparent 75%)",
+                                filter: "blur(40px)",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                            }}
                         />
 
-                        {/* Logo Box */}
+                        {/* Logo image */}
                         <motion.div
-                            initial={{ scale: 0, rotate: -180 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{
-                                duration: 0.8,
-                                ease: [0.22, 1, 0.36, 1],
-                                delay: 0.1,
-                            }}
-                            className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-[#d4af37] to-[#b87333] flex items-center justify-center"
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ position: "relative" }}
                         >
-                            <motion.span
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4, duration: 0.4 }}
-                                className="text-black font-bold text-4xl"
-                            >
-                                L
-                            </motion.span>
+                            <Image
+                                src="/images/moan-logo.png"
+                                alt="Moan"
+                                width={340}
+                                height={80}
+                                priority
+                                style={{
+                                    objectFit: "contain",
+                                    filter:
+                                        "drop-shadow(0 0 12px rgba(240,210,140,0.6)) drop-shadow(0 0 40px rgba(212,175,100,0.25))",
+                                }}
+                            />
                         </motion.div>
 
-                        {/* Loading Bar */}
+                        {/* Tagline */}
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 0.65 }}
+                            transition={{ delay: 0.9, duration: 0.6 }}
+                            style={{
+                                fontFamily: "'Inter', sans-serif",
+                                fontSize: "10px",
+                                letterSpacing: "0.38em",
+                                textTransform: "uppercase",
+                                color: "#c9a96e",
+                                marginTop: "14px",
+                            }}
+                        >
+                            Light the Mood
+                        </motion.p>
+
+                        {/* Loading progress bar */}
                         <motion.div
+                            className="mt-8 h-[1px] rounded-full"
+                            style={{ background: "linear-gradient(90deg, #7a1c2e, #c9a96e)" }}
                             initial={{ width: 0 }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
-                            className="absolute -bottom-8 left-0 h-[2px] bg-gradient-to-r from-[#d4af37] to-[#b87333] rounded-full"
+                            animate={{ width: "120px" }}
+                            transition={{ duration: 2, ease: "easeInOut", delay: 0.3 }}
                         />
                     </div>
-
-                    {/* Brand Name */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5, duration: 0.5 }}
-                        className="absolute bottom-12 text-[#333] text-sm tracking-[0.3em] uppercase"
-                    >
-                        Loading Experience
-                    </motion.div>
                 </motion.div>
             )}
         </AnimatePresence>
