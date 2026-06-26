@@ -28,7 +28,7 @@ export default function ComingSoon() {
         if (!targetEmail || !gender) return;
         const digits = phone.replace(/\D/g, "");
         if (phone && digits.length !== 10) {
-            setPhoneError("Phone number must be exactly 10 digits.");
+            setPhoneError("Oops! Looks like that number isn't quite right — please check and try again 💛");
             return;
         }
         setPhoneError("");

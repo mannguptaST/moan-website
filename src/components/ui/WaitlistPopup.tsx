@@ -37,7 +37,7 @@ export default function WaitlistPopup() {
         if (!targetEmail || !gender) return;
         const digits = phone.replace(/\D/g, "");
         if (phone && digits.length !== 10) {
-            setError("Phone number must be exactly 10 digits.");
+            setError("Oops! Looks like that number isn't quite right — please check and try again 💛");
             return;
         }
         setIsLoading(true);
