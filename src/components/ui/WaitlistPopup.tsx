@@ -14,6 +14,7 @@ export default function WaitlistPopup() {
     const [isLoading, setIsLoading] = useState(false);
     const [done, setDone] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         // Don't show if already joined or dismissed this session
@@ -32,11 +33,18 @@ export default function WaitlistPopup() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !gender) return;
+        const targetEmail = user?.email || email;
+        if (!targetEmail || !gender) return;
         setIsLoading(true);
-        await joinWaitlist(email, phone, gender);
-        setIsLoading(false);
-        setDone(true);
+        setError("");
+        try {
+            await joinWaitlist(targetEmail, phone, gender);
+            setDone(true);
+        } catch {
+            setError("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const copyCode = () => {
@@ -44,6 +52,7 @@ export default function WaitlistPopup() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
+
 
     const inputStyle: React.CSSProperties = {
         background: "rgba(8,8,10,0.7)",
@@ -203,6 +212,12 @@ export default function WaitlistPopup() {
                                                     </span>
                                                 </button>
                                             </form>
+
+                                            {error && (
+                                                <p className="text-center text-[11px] mt-2" style={{ color: "#e07070" }}>
+                                                    {error}
+                                                </p>
+                                            )}
 
                                             <p className="text-center text-[10px] mt-3" style={{ color: "#444" }}>
                                                 No spam. Unsubscribe anytime.
