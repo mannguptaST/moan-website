@@ -35,6 +35,11 @@ export default function WaitlistPopup() {
         e.preventDefault();
         const targetEmail = user?.email || email;
         if (!targetEmail || !gender) return;
+        const digits = phone.replace(/\D/g, "");
+        if (phone && digits.length !== 10) {
+            setError("Phone number must be exactly 10 digits.");
+            return;
+        }
         setIsLoading(true);
         setError("");
         try {
@@ -174,6 +179,9 @@ export default function WaitlistPopup() {
                                                         onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(201,169,110,0.4)")}
                                                         onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)")}
                                                     />
+                                                    {error.includes("10 digits") && (
+                                                        <p className="text-[11px] mt-1" style={{ color: "#e07070" }}>{error}</p>
+                                                    )}
                                                 </div>
 
                                                 {/* Gender */}

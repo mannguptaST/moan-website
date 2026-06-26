@@ -16,6 +16,8 @@ export default function ComingSoon() {
     const [isLoading, setIsLoading] = useState(false);
     const [copied, setCopied] = useState(false);
     const [guestSubmitted, setGuestSubmitted] = useState(false);
+    const [phoneError, setPhoneError] = useState("");
+    const [error, setError] = useState("");
 
     const submitted = !!user?.joinedWaitlist || guestSubmitted;
     const discountCode = user?.discountCode || "MOAN50";
@@ -24,14 +26,24 @@ export default function ComingSoon() {
         e.preventDefault();
         const targetEmail = user?.email || email;
         if (!targetEmail || !gender) return;
+        const digits = phone.replace(/\D/g, "");
+        if (phone && digits.length !== 10) {
+            setPhoneError("Phone number must be exactly 10 digits.");
+            return;
+        }
+        setPhoneError("");
+        setError("");
         setIsLoading(true);
         try {
             await joinWaitlist(targetEmail, phone, gender);
+            if (!user) setGuestSubmitted(true);
+        } catch {
+            setError("Something went wrong. Please try again.");
         } finally {
             setIsLoading(false);
-            if (!user) setGuestSubmitted(true);
         }
     };
+
 
     const copyCode = () => {
         navigator.clipboard.writeText(discountCode);
@@ -205,6 +217,9 @@ export default function ComingSoon() {
                                         onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(201,169,110,0.5)"; }}
                                         onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
                                     />
+                                    {phoneError && (
+                                        <p className="text-[11px] mt-1 px-1" style={{ color: "#e07070" }}>{phoneError}</p>
+                                    )}
 
                                     {/* Gender */}
                                     <div>
@@ -243,6 +258,11 @@ export default function ComingSoon() {
                                         </span>
                                     </button>
                                 </form>
+                                {error && (
+                                    <p className="mt-3 text-xs text-center" style={{ color: "#e07070" }}>
+                                        {error}
+                                    </p>
+                                )}
                                 {!user && (
                                     <p className="mt-4 text-[11px]" style={{ color: "#666" }}>
                                         No spam. Unsubscribe anytime.
