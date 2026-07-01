@@ -18,12 +18,18 @@ export async function POST(request: NextRequest) {
                 phone: body.phone ?? "",
                 gender: body.gender ?? "",
                 source: body.source ?? "website",
+                timestamp: new Date().toISOString(),
+                discountCode: "MOAN50",
             }),
         });
 
         const text = await response.text();
+        if (!response.ok) {
+            return NextResponse.json({ error: "Upstream error", upstream: text }, { status: response.status });
+        }
         return NextResponse.json({ ok: true, upstream: text });
     } catch (err) {
         return NextResponse.json({ error: String(err) }, { status: 500 });
     }
 }
+
