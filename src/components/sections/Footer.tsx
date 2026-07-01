@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Instagram, Mail, ArrowUpRight } from "lucide-react";
+import { Instagram, Facebook, Mail, ArrowUpRight } from "lucide-react";
 import MoanLogo from "@/components/ui/MoanLogo";
 
 const quickLinks = [
@@ -90,10 +90,24 @@ export default function Footer() {
                                 <Instagram className="w-4 h-4" />
                             </motion.a>
 
-                            {/* Contact email */}
-                            {/* TODO: Replace with your actual contact email */}
+                            {/* Facebook */}
                             <motion.a
-                                href="mailto:hello@moancandles.com"
+                                href="https://www.facebook.com/share/1L8DABDG6K/?mibextid=wwXIfr"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                whileHover={{ y: -3 }}
+                                className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                                style={{ border: "1px solid rgba(255,255,255,0.08)", color: "#9a8e8a" }}
+                                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(122,28,46,0.5)"; e.currentTarget.style.color = "#f0ece8"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.color = "#9a8e8a"; }}
+                                aria-label="Facebook"
+                            >
+                                <Facebook className="w-4 h-4" />
+                            </motion.a>
+
+                            {/* Contact email */}
+                            <motion.a
+                                href="mailto:moanofficials@gmail.com"
                                 id="footer-email"
                                 whileHover={{ y: -3 }}
                                 className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
