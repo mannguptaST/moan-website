@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SHEET_URL = process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL;
+const SHEET_URL =
+    process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL?.replace(/^﻿/, "") ||
+    "https://script.google.com/macros/s/AKfycbxO8JHissOOFwaqel-v5spot8LX4C52PCeXmQ_uO1d8eaiw7o5fnTpY-Ag-JCZx1CIdYw/exec";
 
 export async function POST(request: NextRequest) {
     try {
