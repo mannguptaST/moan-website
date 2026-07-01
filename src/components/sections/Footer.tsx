@@ -66,9 +66,8 @@ export default function Footer() {
                         {/* Social + contact */}
                         <div className="flex items-center gap-4">
                             {/* Instagram */}
-                            {/* TODO: Replace href with your actual Instagram handle */}
                             <motion.a
-                                href="https://instagram.com"
+                                href="https://www.instagram.com/moanofficials?igsh=MTZnbngzcWhxZW84bQ==&utm_source=ig_contact_invite"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 id="footer-instagram"
