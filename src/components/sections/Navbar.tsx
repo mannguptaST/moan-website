@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, Instagram } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { useAuth } from "@/context/AuthContext";
 import MoanLogo from "@/components/ui/MoanLogo";
@@ -12,7 +12,8 @@ const navLinks = [
     { name: "About", href: "#about" },
     { name: "The Mood", href: "#product" },
     { name: "Mood Notes", href: "#mood-notes" },
-    { name: "Coming Soon", href: "#coming-soon" },
+    { name: "FAQ", href: "#faq" },
+    { name: "Waitlist", href: "#coming-soon" },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -153,6 +154,29 @@ export default function Navbar() {
                                 >
                                     Sign Up
                                 </button>
+                                {/* Instagram Follow CTA */}
+                                <a
+                                    href="https://www.instagram.com/moanofficials?igsh=MTZnbngzcWhxZW84bQ==&utm_source=ig_contact_invite"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    id="navbar-instagram-follow"
+                                    className="group inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full transition-all duration-300"
+                                    style={{
+                                        border: "1px solid rgba(201,169,110,0.2)",
+                                        color: "#c9a96e",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.borderColor = "rgba(201,169,110,0.45)";
+                                        e.currentTarget.style.background = "rgba(122,28,46,0.12)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.borderColor = "rgba(201,169,110,0.2)";
+                                        e.currentTarget.style.background = "transparent";
+                                    }}
+                                >
+                                    <Instagram className="w-3.5 h-3.5" />
+                                    <span className="text-[10px] tracking-[0.12em] uppercase font-medium">@moanofficials</span>
+                                </a>
                                 <MagneticButton>
                                     <a
                                         href="#coming-soon"
@@ -189,13 +213,13 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.35 }}
-                        className="fixed inset-0 z-40 lg:hidden flex flex-col"
+                        className="fixed inset-0 z-40 lg:hidden flex flex-col overflow-y-auto"
                         style={{ background: "rgba(8,8,10,0.97)", backdropFilter: "blur(20px)" }}
                     >
                         {/* Close area top */}
                         <div className="pt-24" />
 
-                        <div className="flex flex-col items-center justify-center flex-1 gap-8 pb-16">
+                        <div className="flex flex-col items-center justify-center flex-1 gap-8 py-8 px-6">
                             {/* Brand */}
                             <MoanLogo height={56} glowSize="220px" className="mb-4" />
                             <div className="h-px w-16 mb-4" style={{ background: "linear-gradient(90deg, transparent, #7a1c2e, transparent)" }} />
@@ -230,7 +254,27 @@ export default function Navbar() {
                                     border: "1px solid rgba(201,169,110,0.2)",
                                 }}
                             >
-                                Join Waitlist
+                                Claim My 50% Launch Offer
+                            </motion.a>
+
+                            {/* Instagram CTA in mobile menu */}
+                            <motion.a
+                                href="https://www.instagram.com/moanofficials?igsh=MTZnbngzcWhxZW84bQ==&utm_source=ig_contact_invite"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.65 }}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full text-sm tracking-[0.15em] uppercase"
+                                style={{
+                                    color: "#c9a96e",
+                                    border: "1px solid rgba(201,169,110,0.25)",
+                                    background: "rgba(122,28,46,0.08)",
+                                }}
+                            >
+                                <Instagram className="w-4 h-4" />
+                                <span>Follow @moanofficials</span>
                             </motion.a>
 
                             {user ? (
@@ -239,10 +283,16 @@ export default function Navbar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.7 }}
                                     onClick={() => { logout(); setIsMobileMenuOpen(false); }}
-                                    className="flex items-center gap-2 text-sm tracking-[0.15em] uppercase"
-                                    style={{ color: "#9a8e8a" }}
+                                    className="flex items-center gap-2.5 text-sm tracking-[0.15em] uppercase px-6 py-3 rounded-full"
+                                    style={{
+                                        color: "#f0ece8",
+                                        border: "1px solid rgba(201,169,110,0.3)",
+                                        background: "rgba(122,28,46,0.15)",
+                                    }}
                                 >
-                                    <LogOut className="w-4 h-4" /> Sign Out ({user.name.split(" ")[0]})
+                                    <LogOut className="w-4 h-4" style={{ color: "#c9a96e" }} />
+                                    <span>Sign Out</span>
+                                    <span style={{ color: "#c9a96e" }}>({user.name.split(" ")[0]})</span>
                                 </motion.button>
                             ) : (
                                 <motion.button
@@ -250,10 +300,15 @@ export default function Navbar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.7 }}
                                     onClick={() => { openSignUp(); setIsMobileMenuOpen(false); }}
-                                    className="flex items-center gap-2 text-sm tracking-[0.15em] uppercase"
-                                    style={{ color: "#9a8e8a" }}
+                                    className="flex items-center gap-2.5 text-sm tracking-[0.15em] uppercase px-6 py-3 rounded-full"
+                                    style={{
+                                        color: "#f0ece8",
+                                        border: "1px solid rgba(201,169,110,0.3)",
+                                        background: "rgba(201,169,110,0.08)",
+                                    }}
                                 >
-                                    <User className="w-4 h-4" /> Create Account
+                                    <User className="w-4 h-4" style={{ color: "#c9a96e" }} />
+                                    <span>Sign In</span>
                                 </motion.button>
                             )}
                         </div>

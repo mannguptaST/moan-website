@@ -1,13 +1,14 @@
 interface WaitlistEntry {
     email: string;
     phone?: string;
-    gender?: string;
+    gender?: string; // kept for backward compat
+    mood?: string;   // "what mood are you buying for?"
     source?: string;
 }
 
-export async function submitToGoogleSheet(entry: WaitlistEntry): Promise<void> {
+export async function submitToGoogleSheet(entry: WaitlistEntry): Promise<boolean> {
     try {
-        await fetch("/api/waitlist", {
+        const res = await fetch("/api/waitlist", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -17,7 +18,10 @@ export async function submitToGoogleSheet(entry: WaitlistEntry): Promise<void> {
                 source: entry.source ?? "website",
             }),
         });
+        return res.ok;
     } catch {
-        // Never block the user flow on sheet errors
+        // Network error — don't block user flow but return false
+        return false;
     }
 }
+

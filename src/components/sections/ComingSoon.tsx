@@ -3,7 +3,17 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { Instagram, ChevronDown } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+
+const MOOD_OPTIONS = [
+    { value: "", label: "What mood are you buying for? (optional)" },
+    { value: "date_night", label: "Date Night" },
+    { value: "self_care", label: "Self-Care" },
+    { value: "gift", label: "Gift for Someone Special" },
+    { value: "bedroom_ambience", label: "Bedroom Ambience" },
+    { value: "just_exploring", label: "Just Exploring" },
+];
 
 export default function ComingSoon() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -12,7 +22,7 @@ export default function ComingSoon() {
 
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
-    const [gender, setGender] = useState<"male" | "female" | "other" | "">("");
+    const [mood, setMood] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [copied, setCopied] = useState(false);
     const [guestSubmitted, setGuestSubmitted] = useState(false);
@@ -25,7 +35,7 @@ export default function ComingSoon() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const targetEmail = user?.email || email;
-        if (!targetEmail || !gender) return;
+        if (!targetEmail) return;
         const digits = phone.replace(/\D/g, "");
         if (phone && digits.length !== 10) {
             setPhoneError("Oops! Looks like that number isn't quite right — please check and try again 💛");
@@ -35,7 +45,7 @@ export default function ComingSoon() {
         setError("");
         setIsLoading(true);
         try {
-            await joinWaitlist(targetEmail, phone, gender);
+            await joinWaitlist(targetEmail, phone || undefined, undefined, mood || undefined);
             if (!user) setGuestSubmitted(true);
         } catch {
             setError("Something went wrong. Please try again.");
@@ -43,7 +53,6 @@ export default function ComingSoon() {
             setIsLoading(false);
         }
     };
-
 
     const copyCode = () => {
         navigator.clipboard.writeText(discountCode);
@@ -94,7 +103,7 @@ export default function ComingSoon() {
                 >
                     <span className="text-[10px]" style={{ color: "#c9a96e" }}>✦</span>
                     <span className="text-[10px] tracking-[0.2em] uppercase" style={{ color: "#c9a96e" }}>
-                        Limited First Batch · Only 500 Units
+                        Limited First Batch · Only 500 Units · Launching 23rd July 2026
                     </span>
                 </motion.div>
 
@@ -137,11 +146,22 @@ export default function ComingSoon() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.7, delay: 0.2 }}
-                    className="text-sm md:text-base leading-relaxed font-light mb-12 max-w-sm mx-auto"
+                    className="text-sm md:text-base leading-relaxed font-light mb-3 max-w-sm mx-auto"
                     style={{ color: "#c8b9a8", textShadow: "0 2px 20px rgba(0,0,0,0.5)" }}
                 >
                     Join the private waitlist. First 500 members get early access
                     and exclusive launch pricing — before we go public.
+                </motion.p>
+
+                {/* Offer highlight */}
+                <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.7, delay: 0.25 }}
+                    className="text-xs tracking-[0.2em] uppercase mb-10"
+                    style={{ color: "#c9a96e" }}
+                >
+                    ✦ &nbsp;50% off your first order — for early members only&nbsp; ✦
                 </motion.p>
 
                 {/* Form */}
@@ -206,12 +226,13 @@ export default function ComingSoon() {
                                         </div>
                                     )}
 
-                                    {/* Phone */}
+                                    {/* WhatsApp / Phone */}
                                     <input
                                         type="tel"
+                                        id="waitlist-phone"
                                         value={phone}
                                         onChange={(e) => setPhone(e.target.value)}
-                                        placeholder="Phone number (optional)"
+                                        placeholder="WhatsApp number (optional)"
                                         className="w-full px-5 py-4 rounded-xl text-sm outline-none transition-all duration-300"
                                         style={{ background: "rgba(8,8,10,0.75)", border: "1px solid rgba(255,255,255,0.12)", color: "#f0ece8", fontFamily: "'Inter', sans-serif", backdropFilter: "blur(12px)" }}
                                         onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(201,169,110,0.5)"; }}
@@ -221,40 +242,43 @@ export default function ComingSoon() {
                                         <p className="text-[11px] mt-1 px-1" style={{ color: "#e07070" }}>{phoneError}</p>
                                     )}
 
-                                    {/* Gender */}
-                                    <div>
-                                        <p className="text-[10px] tracking-[0.2em] uppercase mb-2 text-left" style={{ color: "#9a8e8a" }}>I identify as *</p>
-                                        <div className="grid grid-cols-3 gap-2">
-                                            {(["male", "female", "other"] as const).map((g) => (
-                                                <button
-                                                    key={g}
-                                                    type="button"
-                                                    onClick={() => setGender(g)}
-                                                    className="py-3 rounded-xl text-xs tracking-[0.1em] capitalize transition-all duration-250"
-                                                    style={{
-                                                        background: gender === g ? "linear-gradient(135deg, #7a1c2e, #3a0a14)" : "rgba(8,8,10,0.75)",
-                                                        border: gender === g ? "1px solid rgba(201,169,110,0.3)" : "1px solid rgba(255,255,255,0.1)",
-                                                        color: gender === g ? "#e0c48a" : "#9a8e8a",
-                                                        backdropFilter: "blur(12px)",
-                                                    }}
-                                                >
-                                                    {g === "male" ? "Male" : g === "female" ? "Female" : "Other"}
-                                                </button>
+                                    {/* Mood dropdown — optional */}
+                                    <div className="relative">
+                                        <select
+                                            id="waitlist-mood"
+                                            value={mood}
+                                            onChange={(e) => setMood(e.target.value)}
+                                            className="w-full px-5 py-4 rounded-xl text-sm outline-none transition-all duration-300 appearance-none"
+                                            style={{
+                                                background: "rgba(8,8,10,0.75)",
+                                                border: "1px solid rgba(255,255,255,0.12)",
+                                                color: mood ? "#f0ece8" : "#9a8e8a",
+                                                fontFamily: "'Inter', sans-serif",
+                                                backdropFilter: "blur(12px)",
+                                            }}
+                                            onFocus={(e) => { e.currentTarget.style.borderColor = "rgba(201,169,110,0.5)"; }}
+                                            onBlur={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
+                                        >
+                                            {MOOD_OPTIONS.map((opt) => (
+                                                <option key={opt.value} value={opt.value} style={{ background: "#0e0810", color: "#f0ece8" }}>
+                                                    {opt.label}
+                                                </option>
                                             ))}
-                                        </div>
+                                        </select>
+                                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: "#9a8e8a" }} />
                                     </div>
 
                                     <button
                                         type="submit"
                                         id="waitlist-submit"
-                                        disabled={isLoading || !gender}
+                                        disabled={isLoading}
                                         className="group relative px-7 py-4 rounded-full overflow-hidden inline-flex items-center justify-center gap-2 w-full"
-                                        style={{ opacity: (isLoading || !gender) ? 0.6 : 1 }}
+                                        style={{ opacity: isLoading ? 0.6 : 1 }}
                                     >
                                         <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
                                         <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400" style={{ background: "linear-gradient(135deg, #9a2540, #570f1e)" }} />
                                         <span className="relative text-xs font-semibold tracking-[0.15em] uppercase" style={{ color: "#e0c48a" }}>
-                                            {isLoading ? "Joining…" : "Claim My Spot — 50% Off"}
+                                            {isLoading ? "Joining…" : "Claim My 50% Launch Offer"}
                                         </span>
                                     </button>
                                 </form>
@@ -296,7 +320,7 @@ export default function ComingSoon() {
                                     {/* Discount code */}
                                     {discountCode && (
                                         <div
-                                            className="rounded-xl p-5"
+                                            className="rounded-xl p-5 mb-5"
                                             style={{ background: "rgba(122,28,46,0.15)", border: "1px solid rgba(201,169,110,0.25)" }}
                                         >
                                             <p className="text-[10px] tracking-[0.25em] uppercase mb-3" style={{ color: "#9a8e8a" }}>
@@ -322,6 +346,31 @@ export default function ComingSoon() {
                                             </p>
                                         </div>
                                     )}
+
+                                    {/* Instagram CTA after submission */}
+                                    <div
+                                        className="rounded-xl p-4"
+                                        style={{ background: "rgba(122,28,46,0.08)", border: "1px solid rgba(201,169,110,0.15)" }}
+                                    >
+                                        <p className="text-[11px] mb-3 leading-relaxed" style={{ color: "#9a8e8a" }}>
+                                            Now follow us on Instagram to stay ahead of the launch — exclusive updates, mood inspiration &amp; limited drop alerts.
+                                        </p>
+                                        <a
+                                            href="https://www.instagram.com/moanofficials?igsh=MTZnbngzcWhxZW84bQ==&utm_source=ig_contact_invite"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            id="post-submit-instagram-follow"
+                                            className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-full transition-all duration-300"
+                                            style={{
+                                                background: "linear-gradient(135deg, rgba(122,28,46,0.4), rgba(58,10,20,0.4))",
+                                                border: "1px solid rgba(201,169,110,0.3)",
+                                                color: "#e0c48a",
+                                            }}
+                                        >
+                                            <Instagram className="w-4 h-4" />
+                                            <span className="text-xs font-medium tracking-[0.15em] uppercase">Follow @moanofficials</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </motion.div>
                         )}

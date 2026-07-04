@@ -25,12 +25,13 @@ interface AuthContextType {
     signUp: (name: string, email: string, password: string) => Promise<void>;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
-    joinWaitlist: (email: string, phone?: string, gender?: string) => Promise<void>;
+    joinWaitlist: (email: string, phone?: string, gender?: string, mood?: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 const STORAGE_KEY = "moan_user";
+const WAITLIST_KEY = "moan_waitlist";
 
 // ─── Provider ────────────────────────────────────────────────────────────────
 
@@ -92,12 +93,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const logout = () => persist(null);
 
-    const joinWaitlist = async (email: string, phone?: string, gender?: string) => {
+    const joinWaitlist = async (email: string, phone?: string, gender?: string, mood?: string): Promise<boolean> => {
         const discountCode = "MOAN50";
 
-        // Save to Google Sheet
-        await submitToGoogleSheet({ email, phone, gender, source: "waitlist" });
+        // Check for duplicate email in local waitlist
+        try {
+            const waitlist: Array<{ email: string; phone: string | null; gender: string | null; discountCode: string }> =
+                JSON.parse(localStorage.getItem(WAITLIST_KEY) ?? "[]");
+            const alreadyIn = waitlist.some((e) => e.email.toLowerCase() === email.toLowerCase());
+            if (alreadyIn) {
+                // If the logged-in user tries to rejoin, still update their profile
+                if (user && !user.joinedWaitlist) {
+                    const updated: UserProfile = {
+                        ...user,
+                        phone,
+                        gender: gender as UserProfile["gender"],
+                        joinedWaitlist: true,
+                        discountCode,
+                    };
+                    persist(updated);
+                }
+                return true; // Already on waitlist — treat as success
+            }
+        } catch {
+            // Ignore localStorage errors
+        }
 
+        // Submit to Google Sheet
+        const sheetSuccess = await submitToGoogleSheet({ email, phone, gender, mood, source: "waitlist" });
+
+        // Update logged-in user profile
         if (user) {
             const updated: UserProfile = {
                 ...user,
@@ -108,13 +133,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             };
             persist(updated);
         }
-        // Store waitlist entry even for guests
-        const waitlist = JSON.parse(localStorage.getItem("moan_waitlist") ?? "[]");
-        const alreadyIn = waitlist.some((e: { email: string }) => e.email === email);
-        if (!alreadyIn) {
-            waitlist.push({ email, phone: phone ?? null, gender: gender ?? null, discountCode });
-            localStorage.setItem("moan_waitlist", JSON.stringify(waitlist));
+
+        // Store waitlist entry locally
+        try {
+            const waitlist: Array<{ email: string; phone: string | null; gender: string | null; discountCode: string; joinedAt: string }> =
+                JSON.parse(localStorage.getItem(WAITLIST_KEY) ?? "[]");
+            waitlist.push({
+                email,
+                phone: phone ?? null,
+                gender: gender ?? null,
+                discountCode,
+                joinedAt: new Date().toISOString(),
+            });
+            localStorage.setItem(WAITLIST_KEY, JSON.stringify(waitlist));
+        } catch {
+            // Ignore storage errors
         }
+
+        return sheetSuccess;
     };
 
     return (

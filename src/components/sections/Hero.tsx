@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Flame } from "lucide-react";
+import { ArrowRight, Flame, Instagram, Calendar } from "lucide-react";
 import { SplitWords } from "@/components/effects/SplitText";
 import Image from "next/image";
 import EmberParticles from "@/components/effects/EmberParticles";
@@ -66,12 +66,30 @@ export default function Hero() {
                 style={{ y, opacity, scale }}
                 className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 md:pt-28"
             >
+                {/* Launch date pill — above the fold */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.9, delay: 0.15 }}
+                    className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-4"
+                    style={{
+                        background: "rgba(122,28,46,0.25)",
+                        border: "1px solid rgba(201,169,110,0.35)",
+                        backdropFilter: "blur(12px)",
+                    }}
+                >
+                    <Calendar className="w-3 h-3" style={{ color: "#c9a96e" }} />
+                    <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: "#c9a96e" }}>
+                        Launching 23rd July 2026
+                    </span>
+                </motion.div>
+
                 {/* Premium badge */}
                 <motion.div
                     initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     transition={{ duration: 0.9, delay: 0.2 }}
-                    className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-10 md:mb-12"
+                    className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-10 md:mb-12 ml-3"
                     style={{
                         background: "rgba(122,28,46,0.18)",
                         border: "1px solid rgba(201,169,110,0.25)",
@@ -84,9 +102,9 @@ export default function Hero() {
                     </span>
                 </motion.div>
 
-                {/* Main headline */}
+                {/* Main headline — H1 */}
                 <h1 className="mb-6 md:mb-8">
-                    {/* Line 1: "Light the" */}
+                    {/* Line 1 */}
                     <span
                         className="block"
                         style={{
@@ -104,7 +122,7 @@ export default function Hero() {
                             Light the
                         </SplitWords>
                     </span>
-                    {/* Line 2: "Mood." — slightly larger for emphasis */}
+                    {/* Line 2: "Mood." */}
                     <span
                         className="block"
                         style={{
@@ -129,24 +147,35 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     transition={{ duration: 0.9, delay: 1.4 }}
-                    className="max-w-md mx-auto mb-10 md:mb-14 leading-relaxed font-light text-sm md:text-base"
+                    className="max-w-lg mx-auto mb-4 leading-relaxed font-light text-sm md:text-base"
                     style={{
                         color: "#d4c8be",
                         fontFamily: "'Inter', sans-serif",
                         textShadow: "0 2px 20px rgba(0,0,0,0.7)",
                     }}
                 >
-                    A premium mood brand crafted to turn ordinary evenings into
-                    intimate, unforgettable moments.
+                    A premium mood candle crafted for slower nights, warmer rooms, and intimate moments.
+                </motion.p>
+
+                {/* Offer line */}
+                <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 1.6 }}
+                    className="mb-10 md:mb-14 text-xs tracking-[0.2em] uppercase"
+                    style={{ color: "#c9a96e", fontFamily: "'Inter', sans-serif" }}
+                >
+                    ✦ &nbsp;Early members get 50% off their first order&nbsp; ✦
                 </motion.p>
 
                 {/* CTA Buttons */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 1.7 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5"
+                    transition={{ duration: 0.7, delay: 1.8 }}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-4"
                 >
+                    {/* Primary CTA — Waitlist */}
                     <a
                         href="#coming-soon"
                         id="hero-join-waitlist"
@@ -156,27 +185,43 @@ export default function Hero() {
                         <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
                         <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "linear-gradient(135deg, #9a2540, #570f1e)" }} />
                         <span className="relative text-sm font-medium tracking-[0.12em] uppercase" style={{ color: "#e0c48a" }}>
-                            Join the Waitlist
+                            Claim My 50% Launch Offer
                         </span>
                         <ArrowRight className="relative w-4 h-4 transition-transform group-hover:translate-x-1" style={{ color: "#c9a96e" }} />
                     </a>
 
+                    {/* Secondary CTA — Instagram */}
                     <a
-                        href="#product"
-                        id="hero-discover-candle"
-                        className="group w-full sm:w-auto px-10 py-4 rounded-full inline-flex items-center justify-center gap-3 transition-all duration-500"
-                        style={{ border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(8px)" }}
+                        href="https://www.instagram.com/moanofficials?igsh=MTZnbngzcWhxZW84bQ==&utm_source=ig_contact_invite"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        id="hero-instagram-follow"
+                        className="group w-full sm:w-auto px-8 py-4 rounded-full inline-flex items-center justify-center gap-2.5 transition-all duration-500"
+                        style={{
+                            border: "1px solid rgba(201,169,110,0.2)",
+                            backdropFilter: "blur(8px)",
+                            background: "rgba(255,255,255,0.04)",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = "rgba(201,169,110,0.45)";
+                            e.currentTarget.style.background = "rgba(122,28,46,0.12)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = "rgba(201,169,110,0.2)";
+                            e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                        }}
                     >
+                        <Instagram className="w-4 h-4 transition-colors group-hover:text-[#f0ece8]" style={{ color: "#c9a96e" }} />
                         <span
-                            className="text-sm font-light tracking-[0.12em] uppercase transition-colors group-hover:text-[#f0ece8]"
+                            className="text-sm font-light tracking-[0.1em] transition-colors group-hover:text-[#f0ece8]"
                             style={{ color: "#c8b9a8" }}
                         >
-                            Discover More
+                            Follow @moanofficials
                         </span>
                     </a>
                 </motion.div>
 
-                {/* Stats — mobile-safe with flex-wrap */}
+                {/* Stats */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -186,7 +231,7 @@ export default function Hero() {
                     {[
                         { value: "100%", label: "Natural Wax" },
                         { value: "60+", label: "Hour Burn" },
-                        { value: "Premium", label: "Pour Quality" },
+                        { value: "23 Jul", label: "Launch Date" },
                     ].map((stat) => (
                         <div key={stat.label} className="text-center">
                             <p

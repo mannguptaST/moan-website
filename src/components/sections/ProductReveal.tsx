@@ -79,7 +79,7 @@ export default function ProductReveal() {
                                 fill
                                 className="object-cover object-center"
                                 quality={85}
-                                style={{ filter: "blur(1.2px) brightness(0.92) saturate(1.1)", transform: "scale(1.03)" }}
+                                style={{ filter: "brightness(0.92) saturate(1.1)", transform: "scale(1.03)" }}
                             />
                             {/* Cinematic overlay — softens edges and adds depth */}
                             <div

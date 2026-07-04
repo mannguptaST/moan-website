@@ -9,9 +9,9 @@ import CustomCursor from "@/components/effects/CustomCursor";
 import ClickRipple from "@/components/effects/ClickRipple";
 
 export const metadata: Metadata = {
-  title: "Moan — Light the Mood. Premium Mood Candles.",
+  title: "Moan | Premium Mood Candles for Intimate Evenings",
   description:
-    "Moan is a premium mood candle brand crafted to turn ordinary nights into intimate, unforgettable moments. Discover the art of atmosphere.",
+    "Moan is a premium mood candle brand crafted for romantic nights, self-care rituals, warm ambience, and intimate spaces. Launching 23rd July 2026. Join the waitlist and get 50% off your first order.",
   keywords: [
     "luxury candles",
     "mood candles",
@@ -20,12 +20,45 @@ export const metadata: Metadata = {
     "Moan candle",
     "intimate atmosphere",
     "scented candles India",
+    "date night candles",
+    "self-care candles",
+    "bedroom ambience",
+    "natural wax candles",
+    "mood candles India",
   ],
+  icons: {
+    icon: [
+      { url: "/images/moan-icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/images/moan-icon.png", type: "image/png", sizes: "192x192" },
+      { url: "/images/moan-icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/images/moan-icon.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: [
+      { url: "/images/moan-icon.png", type: "image/png", sizes: "180x180" },
+    ],
+    shortcut: "/images/moan-icon.png",
+  },
   openGraph: {
-    title: "Moan — Light the Mood.",
+    title: "Moan | Premium Mood Candles for Intimate Evenings",
     description:
-      "A premium mood candle crafted to turn ordinary nights into intimate, unforgettable moments.",
+      "A premium mood candle crafted for romantic nights, self-care rituals, and intimate spaces. Launching 23rd July 2026 — Get 50% off your first order.",
     type: "website",
+    url: "https://moanworld.com",
+    siteName: "Moan",
+    images: [
+      {
+        url: "https://moanworld.com/images/moan-og.png",
+        width: 1200,
+        height: 630,
+        alt: "Moan — Premium Mood Candles. Light the Mood.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Moan | Premium Mood Candles for Intimate Evenings",
+    description: "Launching 23rd July 2026. Join the waitlist and get 50% off your first order.",
+    images: ["https://moanworld.com/images/moan-og.png"],
   },
 };
 

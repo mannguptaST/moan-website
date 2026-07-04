@@ -6,7 +6,10 @@ import BrandStory from "@/components/sections/BrandStory";
 import MoodNotes from "@/components/sections/MoodNotes";
 import UseCases from "@/components/sections/UseCases";
 import ProductSizes from "@/components/sections/ProductSizes";
+import WhyFollowMoan from "@/components/sections/WhyFollowMoan";
+import InstagramTiles from "@/components/sections/InstagramTiles";
 import ComingSoon from "@/components/sections/ComingSoon";
+import FAQTrust from "@/components/sections/FAQTrust";
 import Footer from "@/components/sections/Footer";
 
 export default function Home() {
@@ -20,7 +23,10 @@ export default function Home() {
       <MoodNotes />
       <UseCases />
       <ProductSizes />
+      <WhyFollowMoan />
+      <InstagramTiles />
       <ComingSoon />
+      <FAQTrust />
       <Footer />
     </main>
   );
