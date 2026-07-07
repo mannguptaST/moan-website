@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, User, LogOut, Instagram } from "lucide-react";
+import { Menu, X, User, LogOut, Instagram, ShoppingBag } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/CartContext";
 import MoanLogo from "@/components/ui/MoanLogo";
 
 const navLinks = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "The Mood", href: "#product" },
+    { name: "Shop", href: "#sizes" },
     { name: "Mood Notes", href: "#mood-notes" },
     { name: "FAQ", href: "#faq" },
     { name: "Waitlist", href: "#coming-soon" },
@@ -22,6 +24,7 @@ export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showUserMenu, setShowUserMenu] = useState(false);
     const { user, openSignUp, logout } = useAuth();
+    const { itemCount, openCart } = useCart();
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -68,6 +71,25 @@ export default function Navbar() {
 
                     {/* CTA / Account */}
                     <div className="hidden lg:flex items-center gap-3">
+                        {/* Cart */}
+                        <button
+                            onClick={openCart}
+                            className="relative p-2.5 rounded-full transition-all duration-300"
+                            style={{ border: "1px solid rgba(201,169,110,0.2)" }}
+                            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(122,28,46,0.12)")}
+                            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                            aria-label="Open cart"
+                        >
+                            <ShoppingBag className="w-4 h-4" style={{ color: "#c9a96e" }} />
+                            {itemCount > 0 && (
+                                <span
+                                    className="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 rounded-full text-[9px] font-medium"
+                                    style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)", color: "#e0c48a" }}
+                                >
+                                    {itemCount}
+                                </span>
+                            )}
+                        </button>
                         {user ? (
                             <div className="relative">
                                 <button
@@ -193,15 +215,33 @@ export default function Navbar() {
                         )}
                     </div>
 
-                    {/* Mobile Menu Button */}
-                    <button
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="lg:hidden p-2"
-                        style={{ color: "#f0ece8" }}
-                        aria-label="Toggle menu"
-                    >
-                        {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-                    </button>
+                    {/* Mobile: Cart + Menu Button */}
+                    <div className="lg:hidden flex items-center gap-1">
+                        <button
+                            onClick={openCart}
+                            className="relative p-2"
+                            style={{ color: "#f0ece8" }}
+                            aria-label="Open cart"
+                        >
+                            <ShoppingBag size={20} />
+                            {itemCount > 0 && (
+                                <span
+                                    className="absolute top-0.5 right-0.5 flex items-center justify-center w-3.5 h-3.5 rounded-full text-[8px] font-medium"
+                                    style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)", color: "#e0c48a" }}
+                                >
+                                    {itemCount}
+                                </span>
+                            )}
+                        </button>
+                        <button
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            className="p-2"
+                            style={{ color: "#f0ece8" }}
+                            aria-label="Toggle menu"
+                        >
+                            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                        </button>
+                    </div>
                 </div>
             </motion.nav>
 

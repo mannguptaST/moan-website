@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProductReveal() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -186,14 +187,14 @@ export default function ProductReveal() {
                             animate={isInView ? { opacity: 1 } : {}}
                             transition={{ duration: 0.6, delay: 0.7 }}
                         >
-                            <a
-                                href="#coming-soon"
+                            <Link
+                                href="/product/signature-mood"
                                 className="group inline-flex items-center gap-3 text-sm tracking-[0.15em] uppercase transition-colors"
                                 style={{ color: "#c9a96e" }}
                             >
-                                <span>Reserve Yours Early</span>
+                                <span>Shop the Signature Mood</span>
                                 <span className="transition-transform group-hover:translate-x-1">→</span>
-                            </a>
+                            </Link>
                         </motion.div>
                     </motion.div>
                 </div>

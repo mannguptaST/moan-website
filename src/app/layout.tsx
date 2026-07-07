@@ -3,8 +3,10 @@ import "./globals.css";
 import SmoothScroll from "@/components/effects/SmoothScroll";
 import Preloader from "@/components/effects/Preloader";
 import { AuthProvider } from "@/context/AuthContext";
+import { CartProvider } from "@/context/CartContext";
 import AuthModal from "@/components/ui/AuthModal";
 import WaitlistPopup from "@/components/ui/WaitlistPopup";
+import CartDrawer from "@/components/ui/CartDrawer";
 import CustomCursor from "@/components/effects/CustomCursor";
 import ClickRipple from "@/components/effects/ClickRipple";
 
@@ -71,12 +73,15 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased" suppressHydrationWarning>
         <AuthProvider>
-          <CustomCursor />
-          <ClickRipple />
-          <Preloader />
-          <AuthModal />
-          <WaitlistPopup />
-          <SmoothScroll>{children}</SmoothScroll>
+          <CartProvider>
+            <CustomCursor />
+            <ClickRipple />
+            <Preloader />
+            <AuthModal />
+            <WaitlistPopup />
+            <CartDrawer />
+            <SmoothScroll>{children}</SmoothScroll>
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

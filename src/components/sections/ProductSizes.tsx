@@ -3,42 +3,10 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { products, formatPrice } from "@/lib/products";
 
-const sizes = [
-    {
-        id: "trial",
-        label: "50ml",
-        name: "Trial Flame",
-        tagline: "Your First Encounter",
-        description:
-            "A taste of the Moan experience. Perfect for gifting or discovering your mood. Compact, powerful, personal.",
-        burnTime: "15–20 hrs",
-        tag: "Best for Gifting",
-        featured: false,
-    },
-    {
-        id: "signature",
-        label: "200ml",
-        name: "Signature Mood",
-        tagline: "The Essential",
-        description:
-            "Our most loved size. Rich presence, slow burn, full experience. The candle your evenings deserve.",
-        burnTime: "50–60 hrs",
-        tag: "Most Popular",
-        featured: true,
-    },
-    {
-        id: "afterdark",
-        label: "300ml",
-        name: "After Dark Edition",
-        tagline: "The Statement Piece",
-        description:
-            "For the evenings that last until morning. Deep, lasting warmth. A centrepiece for any bedroom or living space.",
-        burnTime: "80–90 hrs",
-        tag: "Collector's Edition",
-        featured: false,
-    },
-];
+const sizes = products;
 
 export default function ProductSizes() {
     const sectionRef = useRef<HTMLDivElement>(null);
@@ -179,8 +147,8 @@ export default function ProductSizes() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {sizes.map((size, index) => (
                         <motion.div
-                            key={size.id}
-                            id={`size-${size.id}`}
+                            key={size.slug}
+                            id={`size-${size.slug}`}
                             initial={{ opacity: 0, y: 30 }}
                             animate={isInView ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 0.7, delay: 0.25 + index * 0.14 }}
@@ -255,11 +223,28 @@ export default function ProductSizes() {
                             </div>
 
                             {/* Price */}
-                            <div className="text-center">
-                                <span className="text-xs tracking-[0.2em] uppercase" style={{ color: "#555" }}>
-                                    Pricing — Coming Soon
+                            <div className="flex items-baseline justify-center gap-2 mb-5">
+                                <span className="text-xl font-light" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}>
+                                    {formatPrice(size.price)}
                                 </span>
+                                {size.compareAtPrice && (
+                                    <span className="text-sm line-through" style={{ color: "#555" }}>
+                                        {formatPrice(size.compareAtPrice)}
+                                    </span>
+                                )}
                             </div>
+
+                            <Link
+                                href={`/product/${size.slug}`}
+                                className="block text-center py-3 rounded-full text-xs tracking-[0.15em] uppercase font-medium transition-all"
+                                style={{
+                                    background: size.featured ? "linear-gradient(135deg, #7a1c2e, #3a0a14)" : "rgba(255,255,255,0.05)",
+                                    color: size.featured ? "#e0c48a" : "#c9a96e",
+                                    border: size.featured ? "none" : "1px solid rgba(201,169,110,0.25)",
+                                }}
+                            >
+                                View &amp; Buy
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
@@ -272,7 +257,7 @@ export default function ProductSizes() {
                     className="text-center mt-12 text-xs tracking-[0.15em] uppercase"
                     style={{ color: "#444" }}
                 >
-                    All sizes available at launch · Waitlist members get early access
+                    Waitlist members get 50% off their first order
                 </motion.p>
             </div>
         </section>
