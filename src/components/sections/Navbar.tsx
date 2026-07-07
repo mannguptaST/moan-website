@@ -71,16 +71,39 @@ export default function Navbar() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className="relative text-[#9a8e8a] hover:text-[#f0ece8] transition-colors duration-300 text-xs font-medium tracking-[0.15em] uppercase group"
-                            >
-                                {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#7a1c2e] transition-all duration-400 group-hover:w-full" />
-                            </a>
-                        ))}
+                        {navLinks.map((link) =>
+                            link.name === "Shop" ? (
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    className="px-4 py-1.5 rounded-full text-xs font-semibold tracking-[0.15em] uppercase transition-all duration-300"
+                                    style={{
+                                        color: "#e0c48a",
+                                        background: "rgba(122,28,46,0.22)",
+                                        border: "1px solid rgba(201,169,110,0.4)",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.background = "rgba(122,28,46,0.35)";
+                                        e.currentTarget.style.borderColor = "rgba(201,169,110,0.6)";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.background = "rgba(122,28,46,0.22)";
+                                        e.currentTarget.style.borderColor = "rgba(201,169,110,0.4)";
+                                    }}
+                                >
+                                    {link.name}
+                                </a>
+                            ) : (
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    className="relative text-[#9a8e8a] hover:text-[#f0ece8] transition-colors duration-300 text-xs font-medium tracking-[0.15em] uppercase group"
+                                >
+                                    {link.name}
+                                    <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#7a1c2e] transition-all duration-400 group-hover:w-full" />
+                                </a>
+                            )
+                        )}
                     </div>
 
                     {/* CTA / Account */}
@@ -278,22 +301,42 @@ export default function Navbar() {
                             <MoanLogo height={56} glowSize="220px" className="mb-4" />
                             <div className="h-px w-16 mb-4" style={{ background: "linear-gradient(90deg, transparent, #7a1c2e, transparent)" }} />
 
-                            {navLinks.map((link, index) => (
-                                <motion.a
-                                    key={link.name}
-                                    href={link.href}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.08 }}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-lg font-light tracking-[0.2em] uppercase transition-colors"
-                                    style={{ color: "#9a8e8a", fontFamily: "'Inter', sans-serif" }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.color = "#f0ece8")}
-                                    onMouseLeave={(e) => (e.currentTarget.style.color = "#9a8e8a")}
-                                >
-                                    {link.name}
-                                </motion.a>
-                            ))}
+                            {navLinks.map((link, index) =>
+                                link.name === "Shop" ? (
+                                    <motion.a
+                                        key={link.name}
+                                        href={link.href}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.08 }}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="px-6 py-2 rounded-full text-lg font-medium tracking-[0.2em] uppercase transition-all"
+                                        style={{
+                                            color: "#e0c48a",
+                                            fontFamily: "'Inter', sans-serif",
+                                            background: "rgba(122,28,46,0.22)",
+                                            border: "1px solid rgba(201,169,110,0.4)",
+                                        }}
+                                    >
+                                        {link.name}
+                                    </motion.a>
+                                ) : (
+                                    <motion.a
+                                        key={link.name}
+                                        href={link.href}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.08 }}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-lg font-light tracking-[0.2em] uppercase transition-colors"
+                                        style={{ color: "#9a8e8a", fontFamily: "'Inter', sans-serif" }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.color = "#f0ece8")}
+                                        onMouseLeave={(e) => (e.currentTarget.style.color = "#9a8e8a")}
+                                    >
+                                        {link.name}
+                                    </motion.a>
+                                )
+                            )}
 
                             <motion.a
                                 href="/#coming-soon"
