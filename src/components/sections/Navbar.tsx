@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, User, LogOut, Instagram, ShoppingBag } from "lucide-react";
 import Link from "next/link";
@@ -21,23 +21,37 @@ const navLinks = [
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showUserMenu, setShowUserMenu] = useState(false);
     const { user, openSignUp, logout } = useAuth();
     const { itemCount, openCart } = useCart();
+    const lastScrollY = useRef(0);
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 50);
-        window.addEventListener("scroll", handleScroll);
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            setIsScrolled(currentScrollY > 50);
+
+            if (isMobileMenuOpen || currentScrollY < 80) {
+                setIsHidden(false);
+            } else if (currentScrollY > lastScrollY.current + 5) {
+                setIsHidden(true);
+            } else if (currentScrollY < lastScrollY.current - 5) {
+                setIsHidden(false);
+            }
+            lastScrollY.current = currentScrollY;
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [isMobileMenuOpen]);
 
     return (
         <>
             <motion.nav
-                initial={{ y: -100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ y: "-100%", opacity: 0 }}
+                animate={{ y: isHidden ? "-100%" : "0%", opacity: 1 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
                     isScrolled
                         ? "glass py-4 border-b border-[rgba(122,28,46,0.15)]"
