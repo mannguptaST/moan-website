@@ -2,16 +2,17 @@
 
 import { motion } from "framer-motion";
 import { Instagram, Facebook, Mail, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import MoanLogo from "@/components/ui/MoanLogo";
 
 const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "The Mood", href: "#product" },
-    { name: "Mood Notes", href: "#mood-notes" },
-    { name: "Follow the Mood", href: "#follow-the-mood" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Join Waitlist", href: "#coming-soon" },
+    { name: "Home", href: "/#home" },
+    { name: "About", href: "/#about" },
+    { name: "The Mood", href: "/#product" },
+    { name: "Mood Notes", href: "/#mood-notes" },
+    { name: "Follow the Mood", href: "/#follow-the-mood" },
+    { name: "FAQ", href: "/#faq" },
+    { name: "Join Waitlist", href: "/#coming-soon" },
 ];
 
 const legalLinks = [
@@ -100,8 +101,8 @@ export default function Footer() {
                                 Follow @moanofficials
                             </span>
                         </a>
-                        <a
-                            href="#coming-soon"
+                        <Link
+                            href="/#coming-soon"
                             id="footer-waitlist-hero-cta"
                             className="group inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm tracking-[0.12em] uppercase transition-all duration-300"
                             style={{
@@ -118,7 +119,7 @@ export default function Footer() {
                             }}
                         >
                             Claim 50% Off →
-                        </a>
+                        </Link>
                     </div>
                 </motion.div>
 
@@ -127,14 +128,14 @@ export default function Footer() {
                     {/* Brand column */}
                     <div className="lg:col-span-2">
                         {/* Logo */}
-                        <a href="#home" className="inline-block mb-4">
+                        <Link href="/#home" className="inline-block mb-4">
                             <MoanLogo
                                 height={44}
                                 glowSize="180px"
                                 showTagline
                                 tagline="Light the Mood."
                             />
-                        </a>
+                        </Link>
 
                         <p
                             className="text-sm leading-relaxed font-light mb-3 max-w-xs"
@@ -273,8 +274,8 @@ export default function Footer() {
 
                         <br />
 
-                        <a
-                            href="#coming-soon"
+                        <Link
+                            href="/#coming-soon"
                             id="footer-waitlist-cta"
                             className="group inline-flex items-center gap-2 text-xs tracking-[0.15em] uppercase transition-colors mt-2"
                             style={{ color: "#c9a96e" }}
@@ -283,7 +284,7 @@ export default function Footer() {
                         >
                             Join the Waitlist
                             <span className="transition-transform group-hover:translate-x-1">→</span>
-                        </a>
+                        </Link>
 
                         <div className="mt-8 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
                             <p className="text-xs font-light leading-relaxed" style={{ color: "#555" }}>

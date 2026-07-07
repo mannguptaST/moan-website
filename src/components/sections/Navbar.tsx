@@ -3,19 +3,20 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, User, LogOut, Instagram, ShoppingBag } from "lucide-react";
+import Link from "next/link";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import MoanLogo from "@/components/ui/MoanLogo";
 
 const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "The Mood", href: "#product" },
-    { name: "Shop", href: "#sizes" },
-    { name: "Mood Notes", href: "#mood-notes" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/#home" },
+    { name: "About", href: "/#about" },
+    { name: "The Mood", href: "/#product" },
+    { name: "Shop", href: "/#sizes" },
+    { name: "Mood Notes", href: "/#mood-notes" },
+    { name: "FAQ", href: "/#faq" },
+    { name: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -45,14 +46,14 @@ export default function Navbar() {
             >
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
                     {/* Logo */}
-                    <a href="#home" className="group">
+                    <Link href="/#home" className="group">
                         <MoanLogo
                             height={32}
                             glowSize="120px"
                             showTagline
                             tagline="Light the Mood"
                         />
-                    </a>
+                    </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-8">
@@ -139,8 +140,8 @@ export default function Navbar() {
                                                 </div>
                                             )}
                                             {!user.joinedWaitlist && (
-                                                <a
-                                                    href="#coming-soon"
+                                                <Link
+                                                    href="/#coming-soon"
                                                     onClick={() => setShowUserMenu(false)}
                                                     className="flex items-center gap-2 w-full px-3 py-2.5 rounded-lg text-xs transition-colors"
                                                     style={{ color: "#c9a96e" }}
@@ -148,7 +149,7 @@ export default function Navbar() {
                                                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                                                 >
                                                     ✦ Join Waitlist — Get 50% Off
-                                                </a>
+                                                </Link>
                                             )}
                                             <div className="h-px mx-2 my-1" style={{ background: "rgba(255,255,255,0.06)" }} />
                                             <button
@@ -199,8 +200,8 @@ export default function Navbar() {
                                     Sign Up
                                 </button>
                                 <MagneticButton>
-                                    <a
-                                        href="#coming-soon"
+                                    <Link
+                                        href="/#coming-soon"
                                         className="relative px-6 py-3 rounded-full overflow-hidden group inline-block"
                                     >
                                         <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
@@ -208,7 +209,7 @@ export default function Navbar() {
                                         <span className="relative text-xs font-medium tracking-[0.15em] uppercase" style={{ color: "#e0c48a" }}>
                                             Join Waitlist
                                         </span>
-                                    </a>
+                                    </Link>
                                 </MagneticButton>
                             </>
                         )}
@@ -281,7 +282,7 @@ export default function Navbar() {
                             ))}
 
                             <motion.a
-                                href="#coming-soon"
+                                href="/#coming-soon"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.6 }}
