@@ -15,7 +15,6 @@ const navLinks = [
     { name: "Shop", href: "#sizes" },
     { name: "Mood Notes", href: "#mood-notes" },
     { name: "FAQ", href: "#faq" },
-    { name: "Waitlist", href: "#coming-soon" },
     { name: "Contact", href: "#contact" },
 ];
 
@@ -167,15 +166,6 @@ export default function Navbar() {
                             </div>
                         ) : (
                             <>
-                                <button
-                                    onClick={openSignUp}
-                                    className="text-xs tracking-[0.12em] uppercase transition-colors"
-                                    style={{ color: "#9a8e8a" }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.color = "#f0ece8")}
-                                    onMouseLeave={(e) => (e.currentTarget.style.color = "#9a8e8a")}
-                                >
-                                    Sign Up
-                                </button>
                                 {/* Instagram Follow CTA */}
                                 <a
                                     href="https://www.instagram.com/moanofficials?igsh=MTZnbngzcWhxZW84bQ==&utm_source=ig_contact_invite"
@@ -199,6 +189,15 @@ export default function Navbar() {
                                     <Instagram className="w-3.5 h-3.5" />
                                     <span className="text-[10px] tracking-[0.12em] uppercase font-medium">@moanofficials</span>
                                 </a>
+                                <button
+                                    onClick={openSignUp}
+                                    className="text-xs tracking-[0.12em] uppercase transition-colors"
+                                    style={{ color: "#9a8e8a" }}
+                                    onMouseEnter={(e) => (e.currentTarget.style.color = "#f0ece8")}
+                                    onMouseLeave={(e) => (e.currentTarget.style.color = "#9a8e8a")}
+                                >
+                                    Sign Up
+                                </button>
                                 <MagneticButton>
                                     <a
                                         href="#coming-soon"
