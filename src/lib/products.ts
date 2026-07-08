@@ -27,7 +27,7 @@ export const products: Product[] = [
             "The Trial Flame is where every Moan story begins — a single, focused pour meant to introduce you to the scent before you commit to a room-filling size. Light it once and you'll understand why our smallest jar still makes the biggest impression.",
         price: 699,
         compareAtPrice: 999,
-        burnTime: "15–20 hrs",
+        burnTime: "4–6 hrs",
         tag: "Best for Gifting",
         featured: false,
         notes: [
@@ -48,7 +48,7 @@ export const products: Product[] = [
             "Signature Mood is Moan at its truest — the size built for the evenings that matter. A deep, even pour that fills a bedroom or living space with warmth for hours, in a jar designed to sit proudly on your nightstand long after the flame goes out.",
         price: 1499,
         compareAtPrice: 1999,
-        burnTime: "50–60 hrs",
+        burnTime: "10–12 hrs",
         tag: "Most Popular",
         featured: true,
         notes: [
@@ -69,7 +69,7 @@ export const products: Product[] = [
             "After Dark is our largest and longest-burning pour — a centrepiece candle for the nights you don't want to end. Built for collectors and for anyone who wants their space held in warm light from dusk until well past midnight.",
         price: 2199,
         compareAtPrice: 2799,
-        burnTime: "80–90 hrs",
+        burnTime: "18–20 hrs",
         tag: "Collector's Edition",
         featured: false,
         notes: [
