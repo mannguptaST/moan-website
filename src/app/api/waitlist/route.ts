@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
                 mood: body.mood ?? "",
                 source: body.source ?? "website",
                 timestamp: new Date().toISOString(),
-                discountCode: "MOAN50",
+                discountCode: "MOAN51",
             }),
         });
 

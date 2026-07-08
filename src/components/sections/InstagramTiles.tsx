@@ -32,7 +32,7 @@ const instaTiles = [
     {
         id: 4,
         tag: "Exclusive Offer",
-        headline: "50% Off First Order",
+        headline: "51% off First Order",
         sub: "Join the waitlist now. Your discount is waiting.",
         emoji: "✨",
         accent: "#7a1c2e",

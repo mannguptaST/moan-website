@@ -154,7 +154,7 @@ export default function WhyFollowMoan() {
                         </span>
                     </a>
                     <p className="mt-4 text-xs" style={{ color: "#555", fontFamily: "'Inter', sans-serif" }}>
-                        Launching 23rd July 2026 · First 500 members get 50% off
+                        Launching 23rd July 2026 · First 500 members get 51% off
                     </p>
                 </motion.div>
             </div>

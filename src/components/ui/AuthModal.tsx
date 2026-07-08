@@ -103,7 +103,7 @@ export default function AuthModal() {
                                 >
                                     <p className="text-xs tracking-[0.12em]" style={{ color: "#c9a96e" }}>
                                         ✦ Sign up &amp; join the waitlist — get{" "}
-                                        <strong style={{ color: "#e0c48a" }}>50% off</strong> your first order
+                                        <strong style={{ color: "#e0c48a" }}>51% off</strong> your first order
                                     </p>
                                 </div>
                             )}

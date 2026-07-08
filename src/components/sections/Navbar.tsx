@@ -173,7 +173,7 @@ export default function Navbar() {
                                                     <p className="text-sm font-semibold tracking-[0.2em]" style={{ color: "#c9a96e" }}>
                                                         {user.discountCode}
                                                     </p>
-                                                    <p className="text-[9px] mt-0.5" style={{ color: "#666" }}>50% off first order</p>
+                                                    <p className="text-[9px] mt-0.5" style={{ color: "#666" }}>51% off first order</p>
                                                 </div>
                                             )}
                                             {!user.joinedWaitlist && (
@@ -185,7 +185,7 @@ export default function Navbar() {
                                                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(122,28,46,0.15)")}
                                                     onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                                                 >
-                                                    ✦ Join Waitlist — Get 50% Off
+                                                    ✦ Join Waitlist — Get 51% off
                                                 </Link>
                                             )}
                                             <div className="h-px mx-2 my-1" style={{ background: "rgba(255,255,255,0.06)" }} />
@@ -351,7 +351,7 @@ export default function Navbar() {
                                     border: "1px solid rgba(201,169,110,0.2)",
                                 }}
                             >
-                                Claim My 50% Launch Offer
+                                Claim My 51% Launch Offer
                             </motion.a>
 
                             {/* Instagram CTA in mobile menu */}

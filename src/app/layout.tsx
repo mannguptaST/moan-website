@@ -13,7 +13,7 @@ import ClickRipple from "@/components/effects/ClickRipple";
 export const metadata: Metadata = {
   title: "Moan | Premium Mood Candles for Intimate Evenings",
   description:
-    "Moan is a premium mood candle brand crafted for romantic nights, self-care rituals, warm ambience, and intimate spaces. Launching 23rd July 2026. Join the waitlist and get 50% off your first order.",
+    "Moan is a premium mood candle brand crafted for romantic nights, self-care rituals, warm ambience, and intimate spaces. Launching 23rd July 2026. Join the waitlist and get 51% off your first order.",
   keywords: [
     "luxury candles",
     "mood candles",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Moan | Premium Mood Candles for Intimate Evenings",
     description:
-      "A premium mood candle crafted for romantic nights, self-care rituals, and intimate spaces. Launching 23rd July 2026 — Get 50% off your first order.",
+      "A premium mood candle crafted for romantic nights, self-care rituals, and intimate spaces. Launching 23rd July 2026 — Get 51% off your first order.",
     type: "website",
     url: "https://moanworld.com",
     siteName: "Moan",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Moan | Premium Mood Candles for Intimate Evenings",
-    description: "Launching 23rd July 2026. Join the waitlist and get 50% off your first order.",
+    description: "Launching 23rd July 2026. Join the waitlist and get 51% off your first order.",
     images: ["https://moanworld.com/images/moan-og.png"],
   },
 };

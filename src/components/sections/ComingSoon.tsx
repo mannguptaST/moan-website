@@ -30,7 +30,7 @@ export default function ComingSoon() {
     const [error, setError] = useState("");
 
     const submitted = !!user?.joinedWaitlist || guestSubmitted;
-    const discountCode = user?.discountCode || "MOAN50";
+    const discountCode = user?.discountCode || "MOAN51";
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -161,7 +161,7 @@ export default function ComingSoon() {
                     className="text-xs tracking-[0.2em] uppercase mb-10"
                     style={{ color: "#c9a96e" }}
                 >
-                    ✦ &nbsp;50% off your first order — for early members only&nbsp; ✦
+                    ✦ &nbsp;51% off your first order — for early members only&nbsp; ✦
                 </motion.p>
 
                 {/* Form */}
@@ -278,7 +278,7 @@ export default function ComingSoon() {
                                         <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
                                         <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-400" style={{ background: "linear-gradient(135deg, #9a2540, #570f1e)" }} />
                                         <span className="relative text-xs font-semibold tracking-[0.15em] uppercase" style={{ color: "#e0c48a" }}>
-                                            {isLoading ? "Joining…" : "Claim My 50% Launch Offer"}
+                                            {isLoading ? "Joining…" : "Claim My 51% Launch Offer"}
                                         </span>
                                     </button>
                                 </form>
@@ -342,7 +342,7 @@ export default function ComingSoon() {
                                                 </span>
                                             </button>
                                             <p className="text-xs mt-3 font-light" style={{ color: "#c9a96e" }}>
-                                                50% off your first order · Applied at checkout
+                                                51% off your first order · Applied at checkout
                                             </p>
                                         </div>
                                     )}

@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const logout = () => persist(null);
 
     const joinWaitlist = async (email: string, phone?: string, gender?: string, mood?: string): Promise<boolean> => {
-        const discountCode = "MOAN50";
+        const discountCode = "MOAN51";
 
         // Check for duplicate email in local waitlist
         try {

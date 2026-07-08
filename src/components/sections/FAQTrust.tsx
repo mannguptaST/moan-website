@@ -11,11 +11,11 @@ const faqs = [
     },
     {
         q: "When is Moan launching?",
-        a: "Moan launches on 23rd July 2026. Join the waitlist now to secure your spot and receive your exclusive 50% off launch offer.",
+        a: "Moan launches on 23rd July 2026. Join the waitlist now to secure your spot and receive your exclusive 51% off launch offer.",
     },
     {
-        q: "How do I get the 50% off offer?",
-        a: "Simply join our waitlist above. Once you sign up, you'll receive a unique discount code — MOAN50 — which applies 50% off your first order at checkout when we launch.",
+        q: "How do I get the 51% off offer?",
+        a: "Simply join our waitlist above. Once you sign up, you'll receive a unique discount code — MOAN51 — which applies 51% off your first order at checkout when we launch.",
     },
     {
         q: "What is the candle made of?",

@@ -165,7 +165,7 @@ export default function Hero() {
                     className="mb-10 md:mb-14 text-xs tracking-[0.2em] uppercase"
                     style={{ color: "#c9a96e", fontFamily: "'Inter', sans-serif" }}
                 >
-                    ✦ &nbsp;Early members get 50% off their first order&nbsp; ✦
+                    ✦ &nbsp;Early members get 51% off their first order&nbsp; ✦
                 </motion.p>
 
                 {/* CTA Buttons */}
@@ -185,7 +185,7 @@ export default function Hero() {
                         <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
                         <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: "linear-gradient(135deg, #9a2540, #570f1e)" }} />
                         <span className="relative text-sm font-medium tracking-[0.12em] uppercase" style={{ color: "#e0c48a" }}>
-                            Claim My 50% Launch Offer
+                            Claim My 51% Launch Offer
                         </span>
                         <ArrowRight className="relative w-4 h-4 transition-transform group-hover:translate-x-1" style={{ color: "#c9a96e" }} />
                     </a>

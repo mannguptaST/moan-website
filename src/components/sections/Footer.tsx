@@ -119,7 +119,7 @@ export default function Footer() {
                                 e.currentTarget.style.borderColor = "rgba(201,169,110,0.2)";
                             }}
                         >
-                            Claim 50% Off →
+                            Claim 51% off →
                         </Link>
                     </div>
                 </motion.div>
