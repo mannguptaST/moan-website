@@ -226,13 +226,13 @@ export default function PolicyPageLayout({
                                     Have a question about your order or our policies? We&apos;re here to help.
                                 </p>
                                 <a
-                                    href="mailto:moanofficials@gmail.com"
+                                    href="mailto:hello@moanworld.com"
                                     className="text-xs tracking-[0.1em] uppercase transition-colors"
                                     style={{ color: "#c9a96e" }}
                                     onMouseEnter={(e) => (e.currentTarget.style.color = "#e0c48a")}
                                     onMouseLeave={(e) => (e.currentTarget.style.color = "#c9a96e")}
                                 >
-                                    moanofficials@gmail.com →
+                                    hello@moanworld.com →
                                 </a>
                             </div>
                         </motion.aside>
@@ -420,7 +420,7 @@ export default function PolicyPageLayout({
                                     Couldn&apos;t find what you were looking for? Reach out — we respond within 24–48 hours.
                                 </p>
                                 <a
-                                    href="mailto:moanofficials@gmail.com"
+                                    href="mailto:hello@moanworld.com"
                                     id="policy-contact-cta"
                                     className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm tracking-[0.12em] uppercase transition-all duration-300"
                                     style={{

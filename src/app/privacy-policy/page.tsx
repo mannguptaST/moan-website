@@ -29,7 +29,7 @@ const sections = [
     },
     {
         title: "Data Retention",
-        content: `We retain your personal information only as long as necessary to provide our services or as required by applicable law. If you wish to have your data deleted, you may contact us at moanofficials@gmail.com.`,
+        content: `We retain your personal information only as long as necessary to provide our services or as required by applicable law. If you wish to have your data deleted, you may contact us at hello@moanworld.com.`,
     },
     {
         title: "Cookies",
@@ -37,7 +37,7 @@ const sections = [
     },
     {
         title: "Your Rights",
-        content: `You have the right to:\n\n• Access the personal data we hold about you\n• Request correction of inaccurate data\n• Request deletion of your data\n• Opt out of marketing communications\n\nTo exercise any of these rights, write to us at moanofficials@gmail.com.`,
+        content: `You have the right to:\n\n• Access the personal data we hold about you\n• Request correction of inaccurate data\n• Request deletion of your data\n• Opt out of marketing communications\n\nTo exercise any of these rights, write to us at hello@moanworld.com.`,
     },
     {
         title: "Changes to This Policy",

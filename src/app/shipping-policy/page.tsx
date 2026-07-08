@@ -25,7 +25,7 @@ const sections = [
     },
     {
         title: "Order & Shipping Updates",
-        content: `Once your order is dispatched, you will receive tracking details via email or WhatsApp. You can use the tracking link to monitor your delivery in real time.\n\nFor any shipping queries, reach out to us at moanofficials@gmail.com or DM us on Instagram @moanofficials.`,
+        content: `Once your order is dispatched, you will receive tracking details via email or WhatsApp. You can use the tracking link to monitor your delivery in real time.\n\nFor any shipping queries, reach out to us at hello@moanworld.com or DM us on Instagram @moanofficials.`,
     },
     {
         title: "Delivery Delays & Liability",

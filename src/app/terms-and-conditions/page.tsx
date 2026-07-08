@@ -45,7 +45,7 @@ const sections = [
     },
     {
         title: "Contact Us",
-        content: `For any questions regarding these Terms & Conditions, reach out to us at:\n\nEmail: moanofficials@gmail.com\nInstagram: @moanofficials`,
+        content: `For any questions regarding these Terms & Conditions, reach out to us at:\n\nEmail: hello@moanworld.com\nInstagram: @moanofficials`,
     },
 ];
 

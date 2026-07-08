@@ -198,7 +198,7 @@ export default function Footer() {
 
                             {/* Email */}
                             <motion.a
-                                href="mailto:moanofficials@gmail.com"
+                                href="mailto:hello@moanworld.com"
                                 id="footer-email"
                                 whileHover={{ y: -3 }}
                                 className="w-10 h-10 rounded-full flex items-center justify-center transition-colors"
@@ -291,7 +291,7 @@ export default function Footer() {
                             <p className="text-xs font-light leading-relaxed" style={{ color: "#555" }}>
                                 moanworld.com
                                 <br />
-                                moanofficials@gmail.com
+                                hello@moanworld.com
                             </p>
                         </div>
                     </div>

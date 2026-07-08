@@ -13,7 +13,7 @@ const sections = [
     },
     {
         title: "Order Cancellation",
-        content: `Orders once shipped cannot be cancelled. We begin processing orders quickly to ensure fast delivery, so please review your order carefully before confirming payment.\n\nIf your order has not yet been shipped, you may reach out to us at moanofficials@gmail.com to request a cancellation.`,
+        content: `Orders once shipped cannot be cancelled. We begin processing orders quickly to ensure fast delivery, so please review your order carefully before confirming payment.\n\nIf your order has not yet been shipped, you may reach out to us at hello@moanworld.com to request a cancellation.`,
     },
     {
         title: "Eligibility for Refund or Replacement",
@@ -21,7 +21,7 @@ const sections = [
     },
     {
         title: "How to Raise a Claim",
-        content: `To initiate a refund or replacement request, you must:\n\n1. Record an unboxing video at the time of delivery — this is mandatory\n2. Share clear photographs of the damaged or defective product\n3. Contact us within 24–48 hours of delivery via email at moanofficials@gmail.com or WhatsApp\n\nClaims raised after 48 hours of delivery will not be entertained. The unboxing video/photos are required to process your request — no exceptions.`,
+        content: `To initiate a refund or replacement request, you must:\n\n1. Record an unboxing video at the time of delivery — this is mandatory\n2. Share clear photographs of the damaged or defective product\n3. Contact us within 24–48 hours of delivery via email at hello@moanworld.com or WhatsApp\n\nClaims raised after 48 hours of delivery will not be entertained. The unboxing video/photos are required to process your request — no exceptions.`,
     },
     {
         title: "Refund Processing",
@@ -29,7 +29,7 @@ const sections = [
     },
     {
         title: "Contact Us",
-        content: `For any refund or replacement queries, write to us at:\n\nEmail: moanofficials@gmail.com\nInstagram: @moanofficials\n\nWe typically respond within 24–48 business hours.`,
+        content: `For any refund or replacement queries, write to us at:\n\nEmail: hello@moanworld.com\nInstagram: @moanofficials\n\nWe typically respond within 24–48 business hours.`,
     },
 ];
 

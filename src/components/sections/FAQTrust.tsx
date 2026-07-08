@@ -230,7 +230,7 @@ export default function FAQTrust() {
                     <p className="text-sm font-light" style={{ color: "#666" }}>
                         Still have a question?{" "}
                         <a
-                            href="mailto:moanofficials@gmail.com"
+                            href="mailto:hello@moanworld.com"
                             className="transition-colors"
                             style={{ color: "#c9a96e" }}
                             onMouseEnter={(e) => (e.currentTarget.style.color = "#e0c48a")}
