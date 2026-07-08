@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
@@ -254,35 +254,94 @@ export default function BrandStory() {
                             className="grid grid-cols-2 gap-4"
                         >
                             {[
-                                { icon: "🕯️", value: "40+", label: "Fragrance Blends Tested" },
-                                { icon: "📅", value: "1 Year", label: "Of Research & Iteration" },
-                                { icon: "🌿", value: "100%", label: "Natural Wax Formula" },
-                                { icon: "🔥", value: "60+hrs", label: "Premium Burn Time" },
-                            ].map((stat, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={founderInView ? { opacity: 1, y: 0 } : {}}
-                                    transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
-                                    className="p-6 rounded-2xl text-center"
-                                    style={{
-                                        background: "rgba(14,8,10,0.8)",
-                                        border: "1px solid rgba(201,169,110,0.12)",
-                                        backdropFilter: "blur(12px)",
-                                    }}
-                                >
-                                    <p className="text-2xl mb-2">{stat.icon}</p>
-                                    <p
-                                        className="text-2xl font-light mb-1"
-                                        style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}
+                                {
+                                    icon: (
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="12" y1="2" x2="12" y2="6" />
+                                            <path d="M12 6 C12 6, 8 10, 8 14 a4 4 0 0 0 8 0 C16 10 12 6 12 6z" />
+                                            <line x1="9" y1="20" x2="15" y2="20" />
+                                            <line x1="10" y1="22" x2="14" y2="22" />
+                                        </svg>
+                                    ),
+                                    value: "40+",
+                                    label: "Fragrance Blends Tested",
+                                },
+                                {
+                                    icon: (
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" />
+                                            <line x1="16" y1="2" x2="16" y2="6" />
+                                            <line x1="8" y1="2" x2="8" y2="6" />
+                                            <line x1="3" y1="10" x2="21" y2="10" />
+                                            <line x1="8" y1="14" x2="8" y2="14" strokeWidth="2" strokeLinecap="round" />
+                                            <line x1="12" y1="14" x2="12" y2="14" strokeWidth="2" strokeLinecap="round" />
+                                        </svg>
+                                    ),
+                                    value: "1 Year",
+                                    label: "Of Research & Iteration",
+                                },
+                                {
+                                    icon: (
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M12 2 C12 2, 6 7, 6 12 a6 6 0 0 0 12 0 C18 7 12 2 12 2z" />
+                                            <path d="M12 12 Q14 8 18 8" />
+                                        </svg>
+                                    ),
+                                    value: "100%",
+                                    label: "Natural Wax Formula",
+                                },
+                                {
+                                    icon: (
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M12 2 C8 6 6 10 6 13 a6 6 0 0 0 12 0 C18 10 16 6 12 2z" />
+                                            <path d="M10 17 Q10 20 12 20 Q14 20 14 17" />
+                                        </svg>
+                                    ),
+                                    value: "60+hrs",
+                                    label: "Premium Burn Time",
+                                },
+                            ].map((stat, i) => {
+                                const [hovered, setHovered] = useState(false);
+                                return (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={founderInView ? { opacity: 1, y: 0 } : {}}
+                                        transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
+                                        onMouseEnter={() => setHovered(true)}
+                                        onMouseLeave={() => setHovered(false)}
+                                        className="p-6 rounded-2xl text-center flex flex-col items-center gap-3 transition-all duration-300"
+                                        style={{
+                                            background: hovered
+                                                ? "rgba(20,10,14,0.95)"
+                                                : "rgba(14,8,10,0.8)",
+                                            border: hovered
+                                                ? "1px solid rgba(201,169,110,0.35)"
+                                                : "1px solid rgba(201,169,110,0.12)",
+                                            backdropFilter: "blur(12px)",
+                                            boxShadow: hovered
+                                                ? "0 0 28px rgba(201,169,110,0.10), inset 0 0 20px rgba(201,169,110,0.03)"
+                                                : "none",
+                                        }}
                                     >
-                                        {stat.value}
-                                    </p>
-                                    <p className="text-[10px] tracking-[0.15em] uppercase leading-tight" style={{ color: "#666" }}>
-                                        {stat.label}
-                                    </p>
-                                </motion.div>
-                            ))}
+                                        <span
+                                            className="flex items-center justify-center transition-colors duration-300"
+                                            style={{ color: hovered ? "#e0c48a" : "#a88b52" }}
+                                        >
+                                            {stat.icon}
+                                        </span>
+                                        <p
+                                            className="text-2xl font-light leading-none"
+                                            style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}
+                                        >
+                                            {stat.value}
+                                        </p>
+                                        <p className="text-[10px] tracking-[0.15em] uppercase leading-tight" style={{ color: "#666" }}>
+                                            {stat.label}
+                                        </p>
+                                    </motion.div>
+                                );
+                            })}
                         </motion.div>
                     </div>
                 </div>
