@@ -163,7 +163,7 @@ export default function BrandStory() {
                 </div>
             </section>
 
-            {/* ── Founder Story — Bhakti & Aman ─────────────────────────── */}
+            {/* ── Founder Story ─────────────────────────────────────────── */}
             <section
                 id="founders"
                 ref={founderRef}
@@ -205,7 +205,7 @@ export default function BrandStory() {
                                     fontStyle: "italic",
                                 }}
                             >
-                                Bhakti &amp; Aman
+                                The Founders
                             </em>
                         </h2>
                         <div className="h-px w-16 mx-auto mt-6" style={{ background: "linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent)" }} />
@@ -242,7 +242,7 @@ export default function BrandStory() {
                                 className="text-base tracking-[0.15em] uppercase italic"
                                 style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}
                             >
-                                — Bhakti &amp; Aman, Founders of Moan
+                                — The Founders of Moan
                             </p>
                         </motion.div>
 
