@@ -17,9 +17,6 @@ export default function ProductDetail({ product }: { product: Product }) {
     const [justAdded, setJustAdded] = useState(false);
 
     const otherSizes = products.filter((p) => p.slug !== product.slug);
-    const discountPct = product.compareAtPrice
-        ? Math.round(100 - (product.price / product.compareAtPrice) * 100)
-        : 0;
 
     const handleAddToCart = () => {
         addItem(product.slug, quantity);
@@ -120,23 +117,28 @@ export default function ProductDetail({ product }: { product: Product }) {
                         </p>
 
                         {/* Price */}
-                        <div className="flex items-baseline gap-3 mb-8">
+                        <div className="flex flex-col gap-3 mb-8">
                             <span className="text-3xl font-light" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}>
                                 {formatPrice(product.price)}
                             </span>
-                            {product.compareAtPrice && (
-                                <>
-                                    <span className="text-lg line-through" style={{ color: "#555" }}>
-                                        {formatPrice(product.compareAtPrice)}
-                                    </span>
-                                    <span
-                                        className="text-[11px] tracking-[0.1em] uppercase px-2.5 py-1 rounded-full"
-                                        style={{ background: "rgba(122,28,46,0.15)", color: "#e0c48a", border: "1px solid rgba(201,169,110,0.2)" }}
-                                    >
-                                        {discountPct}% off
-                                    </span>
-                                </>
-                            )}
+                            {/* Waitlist CTA — unlock 51% OFF */}
+                            <button
+                                onClick={() => window.dispatchEvent(new Event("moan:open-waitlist"))}
+                                className="inline-flex items-center gap-2 w-fit px-4 py-2 rounded-full transition-all"
+                                style={{
+                                    background: "rgba(122,28,46,0.12)",
+                                    border: "1px solid rgba(201,169,110,0.22)",
+                                    cursor: "pointer",
+                                }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(122,28,46,0.25)"; e.currentTarget.style.borderColor = "rgba(201,169,110,0.45)"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(122,28,46,0.12)"; e.currentTarget.style.borderColor = "rgba(201,169,110,0.22)"; }}
+                            >
+                                <span style={{ color: "#c9a96e", fontSize: "13px" }}>🏷</span>
+                                <span className="text-[11px] tracking-[0.08em]" style={{ color: "#c9a96e" }}>
+                                    Join Waitlist to unlock{" "}
+                                    <strong className="font-semibold tracking-[0.12em]">51% OFF</strong>
+                                </span>
+                            </button>
                         </div>
 
                         <p className="text-sm leading-relaxed font-light mb-8" style={{ color: "#9a8e8a" }}>

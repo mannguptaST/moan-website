@@ -16,9 +16,10 @@ const quickLinks = [
 ];
 
 const legalLinks = [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Contact", href: "mailto:moanofficials@gmail.com" },
+    { name: "Refund Policy", href: "/refund-policy" },
+    { name: "Shipping Policy", href: "/shipping-policy" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Terms & Conditions", href: "/terms-and-conditions" },
 ];
 
 export default function Footer() {
@@ -305,9 +306,9 @@ export default function Footer() {
                         © {currentYear} Moan. All rights reserved. · Launching 23rd July 2026
                     </p>
 
-                    <div className="flex items-center gap-6">
+                    <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2">
                         {legalLinks.map((link) => (
-                            <a
+                            <Link
                                 key={link.name}
                                 href={link.href}
                                 className="text-xs transition-colors"
@@ -316,7 +317,7 @@ export default function Footer() {
                                 onMouseLeave={(e) => (e.currentTarget.style.color = "#444")}
                             >
                                 {link.name}
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>

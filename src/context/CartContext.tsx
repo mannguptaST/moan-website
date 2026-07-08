@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { getProductBySlug } from "@/lib/products";
+import { validateCoupon, calcDiscount } from "@/lib/coupon";
 
 export interface CartItem {
     slug: string;
@@ -20,6 +21,14 @@ interface CartContextType {
     lines: CartLine[];
     itemCount: number;
     subtotal: number;
+    // Coupon
+    couponCode: string;
+    couponApplied: boolean;
+    discountAmount: number;
+    finalTotal: number;
+    applyCoupon: (code: string) => "ok" | "invalid";
+    removeCoupon: () => void;
+    // Cart UI
     isCartOpen: boolean;
     openCart: () => void;
     closeCart: () => void;
@@ -36,6 +45,8 @@ const STORAGE_KEY = "moan_cart";
 export function CartProvider({ children }: { children: ReactNode }) {
     const [items, setItems] = useState<CartItem[]>([]);
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [couponCode, setCouponCode] = useState("");
+    const [couponApplied, setCouponApplied] = useState(false);
 
     useEffect(() => {
         try {
@@ -80,7 +91,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
         persist(items.map((i) => (i.slug === slug ? { ...i, quantity } : i)));
     };
 
-    const clearCart = () => persist([]);
+    const clearCart = () => {
+        persist([]);
+        setCouponCode("");
+        setCouponApplied(false);
+    };
+
+    const applyCoupon = (code: string): "ok" | "invalid" => {
+        if (validateCoupon(code)) {
+            setCouponCode("MOAN51");
+            setCouponApplied(true);
+            return "ok";
+        }
+        return "invalid";
+    };
+
+    const removeCoupon = () => {
+        setCouponCode("");
+        setCouponApplied(false);
+    };
 
     const lines: CartLine[] = items
         .map((item) => {
@@ -98,11 +127,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0);
     const subtotal = lines.reduce((sum, line) => sum + line.price * line.quantity, 0);
+    const { discount: discountAmount, final: finalTotal } = couponApplied
+        ? calcDiscount(subtotal)
+        : { discount: 0, final: subtotal };
 
     return (
         <CartContext.Provider
             value={{
                 items, lines, itemCount, subtotal,
+                couponCode, couponApplied, discountAmount, finalTotal,
+                applyCoupon, removeCoupon,
                 isCartOpen, openCart, closeCart,
                 addItem, removeItem, updateQuantity, clearCart,
             }}

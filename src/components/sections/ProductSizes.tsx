@@ -223,15 +223,24 @@ export default function ProductSizes() {
                             </div>
 
                             {/* Price */}
-                            <div className="flex items-baseline justify-center gap-2 mb-5">
+                            <div className="flex flex-col items-center gap-2 mb-5">
                                 <span className="text-xl font-light" style={{ fontFamily: "'Cormorant Garamond', serif", color: "#c9a96e" }}>
                                     {formatPrice(size.price)}
                                 </span>
-                                {size.compareAtPrice && (
-                                    <span className="text-sm line-through" style={{ color: "#555" }}>
-                                        {formatPrice(size.compareAtPrice)}
-                                    </span>
-                                )}
+                                <button
+                                    onClick={() => window.dispatchEvent(new Event("moan:open-waitlist"))}
+                                    className="text-[10px] tracking-[0.12em] uppercase px-3 py-1.5 rounded-full transition-all"
+                                    style={{
+                                        background: "rgba(122,28,46,0.12)",
+                                        border: "1px solid rgba(201,169,110,0.18)",
+                                        color: "#c9a96e",
+                                        cursor: "pointer",
+                                    }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(122,28,46,0.25)"; e.currentTarget.style.borderColor = "rgba(201,169,110,0.4)"; }}
+                                    onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(122,28,46,0.12)"; e.currentTarget.style.borderColor = "rgba(201,169,110,0.18)"; }}
+                                >
+                                    ✦ Join Waitlist &mdash; Get 51% OFF
+                                </button>
                             </div>
 
                             <Link
@@ -257,7 +266,13 @@ export default function ProductSizes() {
                     className="text-center mt-12 text-xs tracking-[0.15em] uppercase"
                     style={{ color: "#444" }}
                 >
-                    Waitlist members get 50% off their first order
+                    Join the waitlist &amp; get your exclusive{" "}
+                    <button
+                        onClick={() => window.dispatchEvent(new Event("moan:open-waitlist"))}
+                        style={{ color: "#c9a96e", textDecoration: "underline", cursor: "pointer", background: "none", border: "none", fontFamily: "inherit", fontSize: "inherit", letterSpacing: "inherit" }}
+                    >
+                        51% OFF launch code
+                    </button>
                 </motion.p>
             </div>
         </section>

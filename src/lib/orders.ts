@@ -16,6 +16,9 @@ export interface OrderPayload {
     paymentMethod: "cod" | "bank-transfer";
     items: OrderItem[];
     subtotal: number;
+    couponCode?: string;
+    discountAmount?: number;
+    finalTotal?: number;
 }
 
 export async function submitOrder(order: OrderPayload): Promise<boolean> {

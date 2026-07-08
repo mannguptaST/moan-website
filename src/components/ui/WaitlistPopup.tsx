@@ -23,7 +23,15 @@ export default function WaitlistPopup() {
 
         const delay = Math.random() * 2000 + 5000; // 5–7 seconds
         const timer = setTimeout(() => setVisible(true), delay);
-        return () => clearTimeout(timer);
+
+        // Allow other components to open the popup on demand
+        const handleOpen = () => setVisible(true);
+        window.addEventListener("moan:open-waitlist", handleOpen);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener("moan:open-waitlist", handleOpen);
+        };
     }, [user]);
 
     const dismiss = () => {
@@ -53,7 +61,7 @@ export default function WaitlistPopup() {
     };
 
     const copyCode = () => {
-        navigator.clipboard.writeText("MOAN50");
+        navigator.clipboard.writeText("MOAN51");
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -130,7 +138,7 @@ export default function WaitlistPopup() {
                                                         Light the Mood Early
                                                     </p>
                                                     <p className="text-[10px] tracking-[0.2em] uppercase mt-0.5" style={{ color: "#c9a96e" }}>
-                                                        Join waitlist · Get 50% off first order
+                                                     Join waitlist · Get 51% off first order
                                                     </p>
                                                 </div>
                                             </div>
@@ -216,7 +224,7 @@ export default function WaitlistPopup() {
                                                 >
                                                     <span className="absolute inset-0 rounded-full" style={{ background: "linear-gradient(135deg, #7a1c2e, #3a0a14)" }} />
                                                     <span className="relative text-xs font-semibold tracking-[0.18em] uppercase" style={{ color: "#e0c48a" }}>
-                                                        {isLoading ? "Joining…" : "Claim My Spot — 50% Off"}
+                                                         {isLoading ? "Joining…" : "Claim My Spot — 51% Off"}
                                                     </span>
                                                 </button>
                                             </form>
@@ -255,14 +263,14 @@ export default function WaitlistPopup() {
                                                 }}
                                             >
                                                 <span className="text-xl tracking-[0.3em]" style={{ fontFamily: "'Bodoni Moda', 'Cormorant Garamond', serif", color: "#c9a96e" }}>
-                                                    MOAN50
+                                                    MOAN51
                                                 </span>
                                                 <span className="text-[10px] tracking-[0.15em] uppercase" style={{ color: copied ? "#6dd49a" : "#666" }}>
                                                     {copied ? "Copied!" : "Tap to copy"}
                                                 </span>
                                             </button>
                                             <p className="text-[11px] mt-3" style={{ color: "#c9a96e" }}>
-                                                50% off your first order
+                                                51% off your first order — Launch Special ✦
                                             </p>
 
                                             <button

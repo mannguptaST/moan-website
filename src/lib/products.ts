@@ -5,8 +5,7 @@ export interface Product {
     tagline: string;
     description: string;
     story: string;
-    price: number; // INR — placeholder, update before going live
-    compareAtPrice?: number;
+    price: number; // INR — main (full) price shown on product cards
     burnTime: string;
     tag?: string;
     featured: boolean;
@@ -14,7 +13,11 @@ export interface Product {
     images: string[];
 }
 
-// Prices are placeholders — update with real pricing before launch.
+// ── Coupon ────────────────────────────────────────────────────────────────────
+export const COUPON_CODE = "MOAN51";
+export const COUPON_DISCOUNT_PCT = 51;
+
+// ── Products ──────────────────────────────────────────────────────────────────
 export const products: Product[] = [
     {
         slug: "trial-flame",
@@ -25,8 +28,7 @@ export const products: Product[] = [
             "A taste of the Moan experience. Perfect for gifting or discovering your mood. Compact, powerful, personal.",
         story:
             "The Trial Flame is where every Moan story begins — a single, focused pour meant to introduce you to the scent before you commit to a room-filling size. Light it once and you'll understand why our smallest jar still makes the biggest impression.",
-        price: 699,
-        compareAtPrice: 999,
+        price: 549,
         burnTime: "4–6 hrs",
         tag: "Best for Gifting",
         featured: false,
@@ -46,8 +48,7 @@ export const products: Product[] = [
             "Our most loved size. Rich presence, slow burn, full experience. The candle your evenings deserve.",
         story:
             "Signature Mood is Moan at its truest — the size built for the evenings that matter. A deep, even pour that fills a bedroom or living space with warmth for hours, in a jar designed to sit proudly on your nightstand long after the flame goes out.",
-        price: 1499,
-        compareAtPrice: 1999,
+        price: 1365,
         burnTime: "10–12 hrs",
         tag: "Most Popular",
         featured: true,
@@ -67,8 +68,7 @@ export const products: Product[] = [
             "For the evenings that last until morning. Deep, lasting warmth. A centrepiece for any bedroom or living space.",
         story:
             "After Dark is our largest and longest-burning pour — a centrepiece candle for the nights you don't want to end. Built for collectors and for anyone who wants their space held in warm light from dusk until well past midnight.",
-        price: 2199,
-        compareAtPrice: 2799,
+        price: 1978,
         burnTime: "18–20 hrs",
         tag: "Collector's Edition",
         featured: false,
